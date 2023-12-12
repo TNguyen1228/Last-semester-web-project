@@ -11,6 +11,13 @@ async def root():
     return FileResponse("index.html")
 
 @app.get('/menu')
-
 async def menu():
     return FileResponse("menu.html")
+
+@app.get('/about')
+async def about():
+    return
+
+@app.get('/booking')
+async def booking():
+    return
