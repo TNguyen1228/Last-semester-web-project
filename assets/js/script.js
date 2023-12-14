@@ -168,3 +168,21 @@ window.addEventListener("mousemove", function (event) {
   }
 
 });
+
+// Get today's date
+const today = new Date();
+
+// Get the day, month, and year
+const day = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+const year = today.getFullYear();
+
+// Create the formatted date string in MM/DD/YYYY format
+const formattedDate = year + '-' + month + '-' + day;
+
+// Set the minimum value for the input field to today's date
+document.getElementById('reservation-date').min = formattedDate;
+
+// Set the default value of the input field to today's date
+document.getElementById('reservation-date').value = formattedDate;
+
