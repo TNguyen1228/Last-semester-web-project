@@ -186,4 +186,3 @@ document.getElementById('reservation-date').min = formattedDate;
 // Set the default value of the input field to today's date
 document.getElementById('reservation-date').value = formattedDate;
 
-
