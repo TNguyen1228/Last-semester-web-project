@@ -9,13 +9,13 @@
   <!-- 
     - primary meta tags
   -->
-  <title>Trung Ngoc Coffee</title>
-  <meta name="title" content="Trung Ngoc Coffee">
+  <title>Café-Oke</title>
+  <meta name="title" content="Café-Oke">
 
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="./assets/favicon.svg" type="image/svg+xml">
 
   <!-- 
     - google font link
@@ -29,21 +29,13 @@
   -->
   <link rel="stylesheet" href="./assets/css/style.css">
 
-  <!-- 
-    - preload images
-  -->
-  <link rel="preload" as="image" href="./assets/images/hero-slider-1.jpg">
-  <link rel="preload" as="image" href="./assets/images/hero-slider-2.jpg">
-  <link rel="preload" as="image" href="./assets/images/hero-slider-3.jpg">
-
 </head>
 
 <body id="top">
 
   <div class="preload" data-preaload>
     <div class="circle"></div>
-    <p class="text">Trung Ngoc</p> 
-    <p class="text">Coffee</p>
+    <p class="text">Café-Oke</p> 
   </div>
 
   <!-- 
@@ -81,16 +73,6 @@
         <span class="span">+84 363 729 729</span>
       </a>
 
-      <div class="separator"></div>
-
-      <a href="mailto:email" class="topbar-item link">
-        <div class="icon">
-          <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-        </div>
-
-        <span class="span">Email</span>
-      </a>
-
     </div>
   </div>
 
@@ -105,8 +87,8 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#" class="logo">
-        <img src="./assets/images/logo.svg" width="160" height="50" alt="Home" onclick="location.reload()">
+      <a href="/" class="logo">
+        <img src="./assets/images/logo.svg" width="160" height="50" alt="Home">
       </a>
 
       <nav class="navbar" data-navbar>
@@ -120,14 +102,6 @@
         </a>
 
         <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <a href="#home" class="navbar-link hover-underline active">
-              <div class="separator"></div>
-
-              <span class="span">Home</span>
-            </a>
-          </li>
 
           <li class="navbar-item">
             <a href="#menu" class="navbar-link hover-underline">
@@ -146,7 +120,7 @@
           </li>
 
           <li class="navbar-item">
-            <a href="#" class="navbar-link hover-underline">
+            <a href="#contact-info" class="navbar-link hover-underline">
               <div class="separator"></div>
 
               <span class="span">Contact</span>
@@ -200,75 +174,12 @@
 
   <main>
     <article>
-
-      <!-- 
-        - #HERO
-      -->
-
-      <section class="hero text-center" aria-label="home" id="home">
-
-        <ul class="hero-slider" data-hero-slider>
-
-          <li class="slider-item active" data-hero-slider-item>
-
-            <div class="slider-bg">
-              <img src="./assets/images/hero-slider-1.jpeg" width="500" height="500" alt="" class="img-cover">
-            </div>
-
-            <p class="label-2 section-subtitle slider-reveal">Tradational & Hygine</p>
-
-            <h1 class="display-1 hero-title slider-reveal">
-              For the love of <br>
-              delicious drink
-            </h1>
-
-            <p class="body-2 hero-text slider-reveal">
-              Come with friends and relatives to enjoy great drinks
-            </p>
-
-            
-
-          </li>
-
-          <li class="slider-item" data-hero-slider-item>
-
-            <div class="slider-bg">
-              <img src="./assets/images/hero-slider-2.jpg" width="1880" height="950" alt="" class="img-cover">
-            </div>
-
-            <p class="label-2 section-subtitle slider-reveal">Delightful experience</p>
-
-            <h1 class="display-1 hero-title slider-reveal">
-              Make your experience <br>
-              more fun and memorable
-            </h1>
-
-            <!-- <p class="body-2 hero-text slider-reveal">
-            </p> -->
-
-          </li>
-
-        </ul>
-
-        <button class="slider-btn prev" aria-label="slide to previous" data-prev-btn>
-          <ion-icon name="chevron-back"></ion-icon>
-        </button>
-
-        <button class="slider-btn next" aria-label="slide to next" data-next-btn>
-          <ion-icon name="chevron-forward"></ion-icon>
-        </button>
-
-      </section>
-
-
-
-
-
+  
       <!-- 
         - #SERVICE
       -->
 
-      <section class="section service bg-black-10 text-center" aria-label="service">
+      <section class="section service bg-black-10 text-center" aria-label="service" style="padding-top: 200px!important;">
         <div class="container">
 
           <p class="section-subtitle label-2">Flavors For Royalty</p>
@@ -355,51 +266,7 @@
 
         </div>
       </section>
-
-
-
-      <section class="special-drink text-center" aria-labelledby="drink-label">
-
-        <div class="special-drink-banner">
-          <img src="./assets/images/special-drink-banner.jpg" width="940" height="900" loading="lazy" alt="special drink"
-            class="img-cover">
-        </div>
-
-        <div class="special-drink-content bg-black-10">
-          <div class="container">
-
-            <img src="./assets/images/badge-1.png" width="28" height="41" loading="lazy" alt="badge" class="abs-img">
-
-            <p class="section-subtitle label-2">Special Drink</p>
-
-            <h2 class="headline-1 section-title">Lavender White Chocolate Mocha</h2>
-
-            <p class="section-text">
-              White chocolate and lavender syrups, steamed milk, topped with whipped cream.
-            </p>
-
-            <div class="wrapper">
-              <del class="del body-3">$12.00</del>
-
-              <span class="span body-1">$7.99</span>
-            </div>
-
-            <a href="#" class="btn btn-primary">
-              <span class="text text-1">View All Menu</span>
-              <span class="text text-2" aria-hidden="true">View All Menu</span>
-            </a>
-
-          </div>
-        </div>
-
-        <img src="./assets/images/shape-4.png" width="179" height="359" loading="lazy" alt="" class="shape shape-1">
-
-      </section>
-
-
-
-
-
+      
       <!-- 
         - #MENU
       -->
@@ -606,7 +473,7 @@
   -->
 
   <footer class="footer section has-bg-image text-center"
-    style="background-image: url(./assets/images/footer-bg.jpg)">
+    style="background-image: url(./assets/images/footer-bg.jpg)" id="contact-info">
     <div class="container">
 
       <div class="footer-top grid-list">
@@ -659,7 +526,7 @@
         <ul class="footer-list">
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Home</a>
+            <a href="/" class="label-2 footer-link hover-underline">Home</a>
           </li>
 
           <li>
@@ -667,11 +534,11 @@
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">About Us</a>
+            <a href="#" class="label-2 footer-link hover-underline">About</a>
           </li>
 
           <li>
-            <a href="#" class="label-2 footer-link hover-underline">Contact</a>
+            <a href="" class="label-2 footer-link hover-underline">Contact</a>
           </li>
 
         </ul>
