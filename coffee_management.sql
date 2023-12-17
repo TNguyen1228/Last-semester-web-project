@@ -105,6 +105,14 @@ CREATE TABLE `room_items` (
   `last_checked` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `customers_booking` (
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `person` int(11) NOT NULL,
+  `reservation_date` date NOT NULL,
+  `time` varchar(255) NOT NULL,
+  `message` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 --
 -- Chỉ mục cho các bảng đã đổ
 --
