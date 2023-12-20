@@ -9,13 +9,13 @@
   <!-- 
     - primary meta tags
   -->
-  <title>Café-oke Menu</title>
+  <title>Café-Oke Menu</title>
   <meta name="title" content="Caféoke Harmony">
 
   <!-- 
     - favicon
   -->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="shortcut icon" href="./assets/favicon.svg" type="image/svg+xml">
 
   <!-- 
     - google font link
@@ -97,7 +97,7 @@
   <header class="header" data-header>
     <div class="container">
 
-      <a href="#" class="logo">
+      <a href="/" class="logo">
         <img src="./assets/images/logo5.png" width="190" height="100" alt="Home" onclick="location.reload()">
       </a>
 
@@ -338,20 +338,21 @@
       <!-- 
         - #MENU
       -->
-      <section class="section menu" aria-label="menu-label" id="menu">
+      <section class="section menu" aria-label="menu-label" id="menu"> 
+        <!--Tea  -->
         <div class="container">
 
           <p class="section-subtitle"></p>
           
-          <h2 class="headline-1 section-title text-center">Tea & Infusion</h2>
+          <h2 class="headline-1 section-title text-center" id="tea">Tea & Infusion</h2>
 
           <ul class="grid-list">
-
+            {% for item in tea_list %}
             <li>
               <div class="menu-card hover:card">
 
                 <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu-1.png" width="100" height="100" loading="lazy" alt="Ruby Red Tea"
+                  <img src= '{{item[4]}}' width="100" height="100" loading="lazy" alt={{item[1]}}
                     class="img-cover">
                 </figure>
 
@@ -359,177 +360,43 @@
 
                   <div class="title-wrapper">
                     <h3 class="title-3">
-                      <a href="#" class="card-title">Ruby Red Tea</a>
+                      <a href="#" class="card-title">{{item[1]}}</a>
                     </h3>
 
-                    <span class="badge label-1">Seasonal</span>
+                    <!-- <span class="badge label-1">Seasonal</span> -->
 
-                    <span class="span title-2">$11.50</span>
+                    <span class="span title-2">${{item[3]}}</span>
                   </div>
 
                   <p class="card-text label-1">
-                    A luscious infusion of finest red tea leaves, brimming with robust flavor and warmth to elevate your tea experience.
+                    {{item[2]}}
                   </p>
 
                 </div>
 
               </div>
             </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu2.jpg" width="100" height="100" loading="lazy" alt="Peach Iced Tea"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Peach Iced Tea</a>
-                    </h3>
-
-                    <span class="span title-2">$14.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    A harmonious blend of premium tea leaves and succulent peach flavor, served over ice for a delightful and invigorating experience.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu.jpg" width="100" height="100" loading="lazy" alt="Butternut Pumpkin"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Matcha Tea</a>
-                    </h3>
-
-                    <span class="span title-2">$10.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Imported directly from Uji, Japan, our Matcha Supreme boasts a perfect blend of fragrant Uji Matcha
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu3.jpg" width="20" height="20" loading="lazy" alt="Iced Apple Tea"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Iced Apple Tea</a>
-                    </h3>
-
-                    <span class="badge label-1">New</span>
-
-                    <span class="span title-2">$11.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Crisp and refreshing blend that captures the essence of ripe apples in every cool and invigorating sip.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu-5.png" width="100" height="100" loading="lazy" alt="Cream Chocolate Milk Tea"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Cream Chocolate Milk Tea</a>
-                    </h3>
-
-                    <span class="span title-2">$12.50</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    A heavenly blend of chocolatey richness and creamy perfection, topped with luscious whipped cream.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/menu4.jpg" width="100" height="100" loading="lazy" alt="Blue Butterfly Pea Flower Tea"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Blue Butterfly Pea Flower Tea</a>
-                    </h3>
-
-                    <span class="span title-2">$9.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    A type of tea made from the dried flowers of the Clitoria ternatea plant. Enjoy hot or served over ice.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
+            {% endfor %}
+            
           </ul>
           <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
             class="shape shape-2 move-anim">
           <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
             class="shape shape-3 move-anim">
         </div>
-      
+        
+        <!-- Coffee -->
         <div class="container">
           <p class="section-subtitle"></p>
-          <h2 class="headline-1 section-title text-center">Coffee</h2>
-
+          <h2 class="headline-1 section-title text-center" id="coffee">Coffee</h2>
+          
           <ul class="grid-list">
-
+            {% for record in records %}
             <li>
               <div class="menu-card hover:card">
 
                 <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/blackeye.png" width="100" height="100" loading="lazy" alt="Black Eye"
+                  <img src= '{{record[4]}}' width="100" height="100" loading="lazy" alt= {{record[1]}} 
                     class="img-cover">
                 </figure>
 
@@ -537,163 +404,71 @@
 
                   <div class="title-wrapper">
                     <h3 class="title-3">
-                      <a href="#" class="card-title">Black Eye</a>
+                      <a href="#" class="card-title">{{record[1]}}</a>
                     </h3>
 
-                    <span class="badge label-1">Seasonal</span>
+                    <!-- <span class="badge label-1">Seasonal</span> -->
 
-                    <span class="span title-2">$15.00</span>
+                    <span class="span title-2">${{record[3]}}</span>
                   </div>
 
                   <p class="card-text label-1">
-                    Bold and robust blend that delivers a powerful kick of energy with every sip, ensuring a rich and invigorating coffee experience.
+                    {{record[2]}}
                   </p>
 
                 </div>
 
               </div>
             </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/capuccino.png" width="100" height="100" loading="lazy" alt="Capuccino"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Capuccino</a>
-                    </h3>
-
-                    <span class="span title-2">$17.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Rich espresso meets frothy steamed milk, creating a harmonious balance of bold flavor and creamy texture in every delightful cup.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/macchiano.png" width="100" height="100" loading="lazy" alt="Macchiato"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Macchiato</a>
-                    </h3>
-
-                    <span class="span title-2">$20.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Symphony of espresso perfection adorned with a touch of velvety foam, delivering a bold and rich flavor in every enticing sip..
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/cortado.png" width="100" height="100" loading="lazy" alt="Cortado"
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Cortado</a>
-                    </h3>
-
-                    <span class="badge label-1">New</span>
-
-                    <span class="span title-2">$20.50</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Balanced with a splash of warm, silky milk, creating a harmonious and flavorful coffee indulgence.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/americano.png" width="100" height="100" loading="lazy" alt="Americano "
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Americao (Iced)</a>
-                    </h3>
-
-                    <span class="span title-2">$21.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Softened with hot water, delivering a bold and satisfying experience.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="menu-card hover:card">
-
-                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                  <img src="./assets/images/flatwhite.png" width="100" height="100" loading="lazy" alt="flat White "
-                    class="img-cover">
-                </figure>
-
-                <div>
-
-                  <div class="title-wrapper">
-                    <h3 class="title-3">
-                      <a href="#" class="card-title">Flat White</a>
-                    </h3>
-
-                    <span class="span title-2">$19.00</span>
-                  </div>
-
-                  <p class="card-text label-1">
-                    Creating a smooth and indulgent blend that's as satisfying as it is luxurious.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
+            {% endfor %}
           </ul>
-          <p class="menu-text text-center">
-            During winter daily from <span class="span">7:00 pm</span> to <span class="span">9:00 pm</span>
-          </p>
+          
+          <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
+            class="shape shape-2 move-anim">
+          <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
+            class="shape shape-3 move-anim">
+
+        </div>
+      
+        <!-- Snacks -->
+        <div class="container">
+          <p class="section-subtitle"></p>
+          <h2 class="headline-1 section-title text-center">Snacks</h2>
+          <br>
+          <ul class="grid-list">
+            {% for snack in snack_list %}
+            <li>
+              <div class="menu-card hover:card">
+
+                <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                  <img src='{{snack[4]}}' width="100" height="100" loading="lazy" alt={{snack[1]}}
+                    class="img-cover">
+                </figure>
+
+                <div>
+
+                  <div class="title-wrapper">
+                    <h3 class="title-3">
+                      <a href="#" class="card-title">{{snack[1]}}</a>
+                    </h3>
+
+                    <!-- <span class="badge label-1">Seasonal</span> -->
+
+                    <span class="span title-2">${{snack[3]}}</span>
+                  </div>
+
+                  <p class="card-text label-1">
+                    {{snack[2]}}
+                  </p>
+
+                </div>
+
+              </div>
+            </li>
+            {% endfor %}
+            
+
+          </ul>
           <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
             class="shape shape-2 move-anim">
           <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
@@ -701,187 +476,6 @@
 
         </div>
       </section>
-      <!-- Snacks -->
-      <div class="container">
-        <p class="section-subtitle"></p>
-        <h2 class="headline-1 section-title text-center">Snacks</h2>
-        <br>
-        <ul class="grid-list">
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/cookies.png" width="100" height="100" loading="lazy" alt="Christmas Cookies"
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Christmas Cookies</a>
-                  </h3>
-
-                  <span class="badge label-1">Seasonal</span>
-
-                  <span class="span title-2">$8.50</span>
-                </div>
-
-                <p class="card-text label-1">
-                  Warmth of cinnamon, nutmeg, and a hint of sweetness to every delicious bite.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/cake.png" width="100" height="100" loading="lazy" alt="Choco Cake"
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Choco Cake</a>
-                  </h3>
-
-                  <span class="span title-2">$11.00</span>
-                </div>
-
-                <p class="card-text label-1">
-                  Decadent symphony of moist layers and velvety cocoa, ensuring an unforgettable experience for every chocolate lover.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/whippedcake.png" width="100" height="100" loading="lazy" alt="Cream Whipped Cake "
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Cream Whipped Cake</a>
-                  </h3>
-
-                  <span class="span title-2">$9.00</span>
-                </div>
-
-                <p class="card-text label-1">
-                  A luscious symphony of light and airy layers, generously adorned with billowy clouds of whipped cream for an irresistibly delightful treat.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/donut.png" width="100" height="100" loading="lazy" alt="Coffee Donut"
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Coffee Donut</a>
-                  </h3>
-
-                  <span class="badge label-1">New</span>
-
-                  <span class="span title-2">$8.00</span>
-                </div>
-
-                <p class="card-text label-1">
-                  Rich coffee flavor, delivering a delectable treat that pairs perfectly with your favorite cup of coffee.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/vanila panna cotta.png" width="100" height="100" loading="lazy" alt="Vanila Panna Cotta"
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Vanila Panna Cotta</a>
-                  </h3>
-
-                  <span class="span title-2">$10.00</span>
-                </div>
-
-                <p class="card-text label-1">
-                  Delicate essence of vanilla, creating a luxurious and satisfying culinary experience.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="menu-card hover:card">
-
-              <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
-                <img src="./assets/images/flan.png" width="100" height="100" loading="lazy" alt="Flan"
-                  class="img-cover">
-              </figure>
-
-              <div>
-
-                <div class="title-wrapper">
-                  <h3 class="title-3">
-                    <a href="#" class="card-title">Flan</a>
-                  </h3>
-
-                  <span class="span title-2">$5.00</span>
-                </div>
-
-                <p class="card-text label-1">
-                  An exquisite caramel-infused custard that melts in your mouth, offering a perfect balance of silky texture and rich, indulgent flavor.
-                </p>
-
-              </div>
-
-            </div>
-          </li>
-
-        </ul>
-        <img src="./assets/images/shape-5.png" width="921" height="1036" loading="lazy" alt="shape"
-          class="shape shape-2 move-anim">
-        <img src="./assets/images/shape-6.png" width="343" height="345" loading="lazy" alt="shape"
-          class="shape shape-3 move-anim">
-
-      </div>
-    </section>
 
 
 
