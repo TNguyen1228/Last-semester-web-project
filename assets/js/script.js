@@ -188,30 +188,27 @@ document.getElementById('reservation-date').value = formattedDate;
 
 //Handle booking form
 
-document.getElementById('submitButton').addEventListener('submit', async function(event) {
-  event.preventDefault();
-  const form = event.target;
+// document.getElementById('submitButton').addEventListener('submit', async function(event) {
+//   event.preventDefault();
+//   const form = event.target;
 
-  try {
-      const response = await fetch('/', {
-          method: 'POST',
-          body: new FormData(form)
-      });
+//   try {
+//       const response = await fetch('/submit_booking', {
+//           method: 'POST',
+//           body: new FormData(form)
+//       });
 
-      if (response.ok) {
-          const result = await response.json();
-          window.alert(result.message); // Show success message
-          form.reset(); // Clear the form fields
-          window.location.reload(); // Reload the page after successful submission
-      } else {
-          alert('Failed to submit the form');
-      }
-  } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred');
-  }
-});
+//       if (response.status==303) {
+//           const result = await response.json();
+//           window.alert(result.message); // Show success message
+//           form.reset(); // Clear the form fields
+//           window.location.reload(); // Reload the page after successful submission
+//       } else {
+//           alert('Failed to submit the form');
+//       }
+//   } catch (error) {
+//       console.error('Error:', error);
+//       alert('An error occurred');
+//   }
+// });
 
-// function handleSubmit() {
-//   window
-// }
