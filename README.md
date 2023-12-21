@@ -11,7 +11,8 @@
 ```
 uvicorn your_apps_name_here:app --reload
 ```
-    This defaults to serving it only on that machine at default location http://127.0.0.1:8000/. 
+This defaults to serving it only on that machine at default location http://127.0.0.1:8000/. 
+
 - To set it up sot that it serves the page at your computer’s IP address launch it with this command instead:
 ```
 uvicorn your_apps_name_here:app --reload --host 0.0.0.0
@@ -23,7 +24,6 @@ uvicorn your_apps_name_here:app --reload --host 0.0.0.0 --port 5000
 ```
 
 - Alternatively, you can launch the Uvicorn server programmatically from with your Python code by adding Uvicorn to your import statements and then adding the Uvicorn commands to the name=”main” statement:
-
 ```
 if __name__ == "__main__":
     uvicorn.run("your_apps_name_here:app", host="0.0.0.0", port=8000, log_level="info")
