@@ -2,6 +2,7 @@
 
 ## Requirement
 - `uvicorn`
+- **Python library**: `fastapi`, `mysql.connector`, `Jinja2Templates`
 - A RDBM such as XAMPP
 
 ## Running
