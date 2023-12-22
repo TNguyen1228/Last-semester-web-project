@@ -23,7 +23,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: url(/static/background_login2.jpg) no-repeat;
+      background: url(/assets/images/background.jpg) no-repeat;
       background-size: cover;
       background-position: center;
     }
@@ -107,9 +107,11 @@
         <i class="bx bx-user"></i>
       </div>
       <div class="input-box">
-        <input type="password" placeholder="Password" name="password" autocomplete="off" class="input-field" required>
+        <input type="password" placeholder="Password" name="password" autocomplete="off" class="input-field" id="passInput" required>
         <i class="bx bxs-lock-alt"></i>
+        
       </div>
+      <input type="checkbox" onclick="showpassword()">Show Password
       <button type="submit" class="button">Login</button>
     </form>
   </div>
@@ -134,6 +136,14 @@
             })
             .catch(error => console.error('Error:', error));
         }
+    function showpassword() {
+      var x = document.getElementById("passInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
   </script>
 </body>
 
