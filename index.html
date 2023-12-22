@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -166,7 +166,7 @@
 
       </nav>
 
-      <a href="#Booking" class="btn btn-secondary">
+      <a href="#bookingForm" class="btn btn-secondary">
         <span class="text text-1">Book Now!</span>
 
         <span class="text text-2" aria-hidden="true">Book Now!</span>
@@ -450,7 +450,7 @@
               <span class="span body-1">$7.99</span>
             </div>
 
-            <a href="/menu.html" class="btn btn-primary">
+            <a href="/menu" class="btn btn-primary">
               <span class="text text-1">View All Menu</span>
               <span class="text text-2" aria-hidden="true">View All Menu</span>
             </a>
@@ -558,7 +558,7 @@
 
           <div class="form reservation-form bg-black-10">
 
-            <form action="/submit_booking" class="form-left" id="Booking" method="POST">
+            <form id="bookingForm" class="form-left">
 
               <h2 class="headline-1 text-center">Online Reservation</h2>
 
@@ -624,7 +624,7 @@
 
               <textarea name="message" placeholder="Message" autocomplete="off" class="input-field"></textarea>
 
-              <button type="submit" class="btn btn-secondary" id="submitButton">
+              <button type="submit" class="btn btn-secondary" onclick="submitBooking()">
                 <span class="text text-1">Book A Room</span>
 
                 <span class="text text-2" aria-hidden="true">Book A Room</span>

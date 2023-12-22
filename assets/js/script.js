@@ -1,6 +1,3 @@
-'use strict';
-
-
 
 /**
  * PRELOAD
@@ -186,29 +183,20 @@ document.getElementById('reservation-date').min = formattedDate;
 // Set the default value of the input field to today's date
 document.getElementById('reservation-date').value = formattedDate;
 
-//Handle booking form
+function submitBooking() {
+  const formBooking = document.getElementById('bookingForm');
+  const formBookingData = new FormData(formBooking);
 
-// document.getElementById('submitButton').addEventListener('submit', async function(event) {
-//   event.preventDefault();
-//   const form = event.target;
-
-//   try {
-//       const response = await fetch('/submit_booking', {
-//           method: 'POST',
-//           body: new FormData(form)
-//       });
-
-//       if (response.status==303) {
-//           const result = await response.json();
-//           window.alert(result.message); // Show success message
-//           form.reset(); // Clear the form fields
-//           window.location.reload(); // Reload the page after successful submission
-//       } else {
-//           alert('Failed to submit the form');
-//       }
-//   } catch (error) {
-//       console.error('Error:', error);
-//       alert('An error occurred');
-//   }
-// });
-
+  fetch('/submit_booking', {
+      method: 'POST',
+      body: formBookingData
+  })
+  .then(response => {
+      if (response.ok) {
+        window.alert('Booking successful. Thank you!');
+        // Redirect to a new page or perform other actions upon successful login
+        window.location.href = '/'; 
+      }
+  })
+  .catch(error => console.error('Error:', error));
+}
