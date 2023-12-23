@@ -132,6 +132,7 @@
                 } else {
                     // Handle login failure (show error message, etc.)
                     window.alert('Login failed, try again.');
+                    document.getElementById('loginForm').reset();
                 }
             })
             .catch(error => console.error('Error:', error));

@@ -4,6 +4,9 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="icon" href="./assets/favicon.png">
+    <title>Admin DASHBOARD</title>
     <style>
         body {
         font-family: "Lato", sans-serif;
@@ -57,15 +60,67 @@
         background-color: #444;
         }
 
+        .logout-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #8a2828;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+        }
         #main {
         transition: margin-left .5s;
         padding: 16px;
         }
 
+        /* Dropdown Button */
+        .dropbtn {
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #413d3d;
+            min-width: 160px;
+            box-shadow: 0px 8px 0px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            left: 12px;
+            border-radius: 5px;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: rgb(255, 255, 255);
+            padding: 8px 8px 8px 20px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .show {display:block;}
+
         /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
         @media screen and (max-height: 450px) {
-        .sidebar {padding-top: 15px;}
-        .sidebar a {font-size: 18px;}
+            .sidebar {padding-top: 15px;}
+            .sidebar a {font-size: 18px;}
         }
     </style>
 </head>
@@ -73,31 +128,83 @@
 <body>
 
     <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        {%for table in tables%}
-        <a href="#">{{table[0]}}</a>
-        {% endfor %}
+        <a onclick="dropDownList()" class="dropbtn">Show Table</a>
+        <div id="dropdownTable" class="dropdown-content">
+            <a href="#">Customer</a>
+            <a href="#">Booking</a>
+            <a href="#">Employees</a>
+            <a href="#">Menu</a>
+            <a href="#">Room items</a>
+            <a href="#">Table&Room Management</a>
+        </div>
         <a href="#">Services</a>
-        <a href="#">Clients</a>
+        <a href="/">Clients</a>
         <a href="#">Contact</a>
     </div>
 
-    <div id="main">
-        <button class="openbtn" onclick="openNav()">☰ Open Table</button>  
-        <h2>THIS IS ADMIN DASHBOARD</h2>
-        <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
-    </div>
+    <main>
+        <button class="openbtn" onclick="toggleNav()">☰</button>
+        <button class="logout-btn">Logout</button>  
+        <h2 style="text-align: center;">THIS IS ADMIN DASHBOARD</h2>
+        <!-- <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p> -->
+    </main>
 
     <script>
-        function openNav() {
-        document.getElementById("mySidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
+        let navOpen=false;
+        function toggleNav() {
+            const sidebar = document.getElementById("mySidebar");
+            const mainContent = document.querySelector("main");
+            if (sidebar && mainContent) {
+                if (!navOpen) {
+                    // If the navigation is closed, open it
+                    sidebar.style.width = "250px";
+                    mainContent.style.marginLeft = "250px";
+                    document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+                    navOpen = true;
+                } else {
+                    // If the navigation is open, close it
+                    sidebar.style.width = "0";
+                    mainContent.style.marginLeft = "0";
+                    document.body.style.backgroundColor = "white";
+                    navOpen = false;
+                }
+            }
         }
 
-        function closeNav() {
-        document.getElementById("mySidebar").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
+        function dropDownList() {
+            document.getElementById("dropdownTable").classList.toggle("show");
         }
+
+        // Close the dropdown menu if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+                }
+            }
+        }
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            fetch('/logout', {
+                method: 'GET'
+                // You can add headers or other configurations as needed
+            })
+            .then(response => {
+                // Handle response if needed (e.g., check status code)
+                if (response.ok) {
+                    // Redirect to login page or any desired page after logout
+                    window.location.href = '/login';
+                }
+            })
+            .catch(error => {
+                console.error('Error during logout:', error);
+                // Handle network errors or other exceptions
+            });
+        });
     </script>
    
 </body>

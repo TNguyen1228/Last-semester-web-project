@@ -126,3 +126,7 @@ async def dashboard(request: Request):
     # Only accessible if authenticated
     return templates.TemplateResponse('dashboard.html',{"request": request, "tables":table_list})
 
+@app.get('/logout')
+async def logout(request: Request):
+    request.session.clear()  # Clear the session
+    return Response(status_code=200)  
