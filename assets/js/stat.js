@@ -1,11 +1,11 @@
 const search = document.querySelector('.input-group input'),
     table_rows = document.querySelectorAll('tbody tr'),
     table_headings = document.querySelectorAll('thead th');
-    if (search) {
-        search.addEventListener('input', searchTable);
-    }
+if (search) {
+    search.addEventListener('input', searchTable);
+}
 
-    function searchTable() {
+function searchTable() {
     table_rows.forEach((row, i) => {
         let table_data = row.textContent.toLowerCase(),
             search_data = search.value.toLowerCase();
@@ -45,10 +45,9 @@ const confirmModal = document.querySelector('#confirmModal');
 //     confirmModal.style.display = 'block';
 // });
 document.addEventListener("DOMContentLoaded", function () {
-const newStaffButton = document.querySelector('#newStaffButton');
+    const newStaffButton = document.querySelector('#newStaffButton');
     if (newStaffButton) {
         newStaffButton.addEventListener('click', function () {
-
             window.location.href = '/new-employee';
         });
     }
@@ -58,8 +57,8 @@ function validateForm(event) {
     var idPattern = /^ID_\d{1,6}$/;
     if (!idPattern.test(idValue)) {
         showErrorPopup("The ID is not ID_(number) form");
-        event.preventDefault(); 
-        return; 
+        event.preventDefault();
+        return;
     }
     if (isIdDuplicated(idValue)) {
         showErrorPopup("ID already exited");

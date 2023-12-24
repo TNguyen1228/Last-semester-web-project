@@ -19,9 +19,9 @@ app=FastAPI()
 templates=Jinja2Templates(directory='./')
 
 app.mount("/assets", StaticFiles(directory="assets"))
-
 # Configure session middleware
 app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY, session_cookie="session-id", max_age=1800)
+
 
 #Configure connect 
 customer = mysql.connector.connect(
@@ -131,16 +131,19 @@ async def getNhanVien(request: Request):
 
 @app.delete("/delete-employee")
 async def deleteEmployee(request: Request, employee_id: str = Form(...)):
-    user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    # user = request.session.get("user")
+    # if not user:
+    #     return RedirectResponse(url='/login')
     admin_cursor.execute("DELETE FROM employees WHERE employee_id = %s", (employee_id,))
     admin.commit()
     return Response(status_code=303)
 
 @app.get("/new-employee", response_class=HTMLResponse)
-async def getNewEmployee(requests: Request):
-    return templates.TemplateResponse("new_employee.html", {"request": requests})
+async def getNewEmployee(request: Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    return templates.TemplateResponse("new_employee.html", {"request": request})
 @app.post("/add-employee", response_class=HTMLResponse)
 async def addEmployee(
     request: Request,
@@ -151,9 +154,9 @@ async def addEmployee(
     new_salary: float = Form(...),
     new_hire_date: str = Form(...),
 ):
-    user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    # user = request.session.get("user")
+    # if not user:
+    #     return RedirectResponse(url='/login')
     global error_message  
     cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (new_id,))
     existing_employee = cursor.fetchone()
@@ -162,7 +165,7 @@ async def addEmployee(
         error_message = "ID already exited"
         return templates.TemplateResponse("new_employee.html", {"request": request, "error_message": error_message})
     
-    admin.execute(
+    admin_cursor.execute(
         """
         INSERT INTO employees (employee_id, name, position, contact_info, salary, hire_date)
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -171,4 +174,31 @@ async def addEmployee(
     )
     admin.commit()
     error_message = ""
-    return Response(status_code=303)
+    return RedirectResponse(url="/employees", status_code=303)
+
+@app.get("/update-employee", response_class=HTMLResponse)
+async def getUpdateEmployee(request: Request, employee_id: str = Query(...)):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (employee_id,))
+    employee_info = admin_cursor.fetchone()
+    return templates.TemplateResponse("update.html", {"request": request, "employee_info": employee_info})
+
+@app.post("/updating")
+async def updateEmployee(
+    employee_id: str = Form(...),
+    new_position: str = Form(...),
+    new_contact_info: str = Form(...),
+    new_salary: int = Form(...),
+):
+    admin_cursor.execute(
+        """
+        UPDATE employees 
+        SET position = %s, contact_info = %s, salary = %s
+        WHERE employee_id = %s
+        """,
+        (new_position, new_contact_info, new_salary, employee_id),
+    )
+    admin.commit()
+    return RedirectResponse(url='/employees',status_code=303)
