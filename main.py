@@ -202,3 +202,20 @@ async def updateEmployee(
     )
     admin.commit()
     return RedirectResponse(url='/employees',status_code=303)
+
+@app.get('/purchase',response_class=HTMLResponse)
+async def purchase(request: Request):
+
+    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'CF%' ")
+    coffee_list=cursor.fetchall()
+
+    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'TEA%' ")
+    tea_list=cursor.fetchall()
+
+    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'Smoothie%' ")
+    smoothie_list=cursor.fetchall()
+
+    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
+    snack_list=cursor.fetchall()
+    return templates.TemplateResponse("purchase.html",{"request": request, "records":coffee_list, 
+                                                   "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="./assets/css/style.css"> -->
+  <style>
+    body {
+      font-family: Arial;
+      font-size: 17px;
+      padding: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .row {
+      display: -ms-flexbox;
+      /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap;
+      /* IE10 */
+      flex-wrap: wrap;
+      margin: 0 -16px;
+    }
+
+    .col-25 {
+      -ms-flex: 25%;
+      /* IE10 */
+      flex: 25%;
+    }
+
+    .col-50 {
+      -ms-flex: 50%;
+      /* IE10 */
+      flex: 50%;
+    }
+
+    .col-75 {
+      -ms-flex: 75%;
+      /* IE10 */
+      flex: 75%;
+    }
+
+    .col-25,
+    .col-50,
+    .col-75 {
+      padding: 0 16px;
+    }
+
+    .container {
+      background-color: #f2f2f2;
+      padding: 5px 20px 15px 20px;
+      border: 1px solid lightgrey;
+      border-radius: 3px;
+    }
+
+    input[type=text] {
+      width: 100%;
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    label {
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .icon-container {
+      margin-bottom: 20px;
+      padding: 7px 0;
+      font-size: 24px;
+    }
+
+    .button {
+      width: 50px;
+      height: 50px;
+      background-color: #d2d2d2;
+      border: none;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    .cbutton {
+      border-radius: 50%;
+    }
+
+    .cbutton:hover {
+      background-color: #787878;
+    }
+
+    a {
+      color: #2196F3;
+      text-align: center;
+    }
+
+    hr {
+      border: 1px solid lightgrey;
+    }
+
+    span.price {
+      float: right;
+      color: grey;
+    }
+
+    /* .grid-list {
+      display: grid;
+      gap: 40px;
+    }
+
+    .menu .section-title {
+      margin-block-end: 40px;
+    }
+
+    .menu .grid-list {
+      margin-block-end: 50px;
+    }
+
+    .menu-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .hover\:card .card-banner {
+      background-color: var(--gold-crayola);
+    }
+
+    .hover\:card .card-banner .img-cover {
+      transition: var(--transition-2);
+    }
+
+    .hover\:card:is(:hover, :focus-within) .card-banner .img-cover {
+      opacity: 0.7;
+      transform: scale(1.05);
+    }
+
+    .menu-card .card-banner {
+      flex-shrink: 0;
+      border-radius: var(--radius-24);
+    }
+
+    .menu-card .card-title {
+      transition: var(--transition-1);
+    }
+
+    .menu-card .card-title:is(:hover, :focus-visible) {
+      color: var(--gold-crayola);
+    }
+
+    .menu-card .badge {
+      background-color: var(--gold-crayola);
+      color: var(--eerie-black-1);
+      font-family: var(--fontFamily-forum);
+      max-width: max-content;
+      line-height: var(--lineHeight-6);
+      text-transform: uppercase;
+      padding-inline: 10px;
+      margin-block-start: 10px;
+    }
+
+    .menu-card .span {
+      color: var(--gold-crayola);
+      margin-block: 10px;
+    }
+
+    .menu-card .card-text {
+      color: var(--quick-silver);
+      line-height: var(--lineHeight-4);
+    }
+
+    .menu-text .span {
+      display: inline-block;
+      color: var(--gold-crayola);
+    }
+
+    .menu .btn {
+      margin-inline: auto;
+      margin-block-start: 26px;
+    }
+
+    .menu .shape {
+      display: block;
+      width: 70%;
+    }
+
+    .menu .shape-2 {
+      top: 0;
+      left: 0;
+    }
+
+    .menu .shape-3 {
+      bottom: 0;
+      right: 0;
+    } */
+
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+    @media (max-width: 800px) {
+      .row {
+        flex-direction: column-reverse;
+      }
+
+      .col-25 {
+        margin-bottom: 20px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h2 style="text-align: center;">PURCHASE</h2>
+  <!-- <p>Resize the browser window to see the effect. When the screen is less than 800px wide, make the two columns stack
+        on top of each other instead of next to each other.</p> -->
+  <div class="row">
+    <div class="col-75">
+      <div class="container">
+        <!-- <form action="/action_page.php">
+
+                    <div class="row">
+                        <div class="col-50">
+                            <h3>Billing Address</h3>
+                            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                            <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="text" id="email" name="email" placeholder="john@example.com">
+                            <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                            <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                            <label for="city"><i class="fa fa-institution"></i> City</label>
+                            <input type="text" id="city" name="city" placeholder="New York">
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" name="state" placeholder="NY">
+                                </div>
+                                <div class="col-50">
+                                    <label for="zip">Zip</label>
+                                    <input type="text" id="zip" name="zip" placeholder="10001">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-50">
+                            <h3>Payment</h3>
+                            <label for="fname">Accepted Cards</label>
+                            <div class="icon-container">
+                                <i class="fa fa-cc-visa" style="color:navy;"></i>
+                                <i class="fa fa-cc-amex" style="color:blue;"></i>
+                                <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                                <i class="fa fa-cc-discover" style="color:orange;"></i>
+                            </div>
+                            <label for="cname">Name on Card</label>
+                            <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                            <label for="ccnum">Credit card number</label>
+                            <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                            <label for="expmonth">Exp Month</label>
+                            <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                            <div class="row">
+                                <div class="col-50">
+                                    <label for="expyear">Exp Year</label>
+                                    <input type="text" id="expyear" name="expyear" placeholder="2018">
+                                </div>
+                                <div class="col-50">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" placeholder="352">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <label>
+                        <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                    </label>
+                    <input type="submit" value="Continue to checkout" class="btn">
+                </form> -->
+        <section>
+          <!--Tea  -->
+          <div class="container">
+
+            <!-- <p class="section-subtitle"></p>
+              
+                      <h2 class="headline-1 section-title text-center" id="tea">Tea</h2>
+              
+                      <ul class="grid-list">
+                        {% for item in tea_list %}
+                        <li>
+                          <div class="menu-card hover:card">
+              
+                            <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                              <img src='{{item[4]}}' width="40" height="40" loading="lazy" alt={{item[1]}} class="img-cover">
+                            </figure>
+              
+                            <div>
+              
+                              <div class="title-wrapper">
+                                <h3 class="title-3">
+                                  <a  class="card-title">{{item[1]}}</a>
+                                </h3>
+              
+                                <span class="span title-2">${{item[3]}}</span>
+                              </div>
+              
+                              
+              
+                            </div>
+              
+                          </div>
+                        </li>
+                        {% endfor %}
+                      </ul> -->
+
+            <table style="width: 100%;">
+              <h2 id="tea" style="text-align: center;">Tea</h2>
+              <tr>
+                <th style="width: 15px;"></th>
+                <th style="width: 400px; padding-left: 120px; text-align: left;">Name</th>
+                <th style="text-align: center;">Price</th>
+                <th style="width: 30%;"></th>
+              </tr>
+              {% for item in tea_list %}
+              <tr>
+                <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                    alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                <td style="padding: 20px; padding-left: 40px;"><a>{{item[1]}}</a></td>
+                <td style="text-align: center;">${{item[3]}}</td>
+                <td><button class="button cbutton" id="decrease" data-id={{item[0]}}>-</button><span id=count_{{item[0]}}>0</span><button
+                    class="button cbutton" id="increase" data-id={{item[0]}}>+</button></td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+
+          <!-- Coffee -->
+          <div class="container">
+            <p class="section-subtitle"></p>
+            <h2 class="headline-1 section-title text-center" id="coffee">Coffee</h2>
+            <ul class="grid-list">
+              {% for record in records %}
+              <li>
+                <div class="menu-card hover:card">
+
+                  <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                    <img src='{{record[4]}}' width="40" height="40" loading="lazy" alt={{record[1]}} class="img-cover">
+                  </figure>
+
+                  <div>
+
+                    <div class="title-wrapper">
+                      <h3 class="title-3">
+                        <a>{{record[1]}}</a>
+                      </h3>
+
+                      <!-- <span class="badge label-1">Seasonal</span> -->
+
+                      <span class="span title-2">${{record[3]}}</span>
+                    </div>
+
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Smoothies -->
+          <div class="container">
+            <p class="section-subtitle"></p>
+            <h2 class="headline-1 section-title text-center" id="smoothie">Smoothies</h2>
+            <ul class="grid-list">
+              {% for item in smoothie_list %}
+              <li>
+                <div class="menu-card hover:card">
+
+                  <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                    <img src='{{item[4]}}' width="40" height="40" loading="lazy" alt={{item[1]}} class="img-cover">
+                  </figure>
+
+                  <div>
+
+                    <div class="title-wrapper">
+                      <h3 class="title-3">
+                        <a class="card-title">{{item[1]}}</a>
+                      </h3>
+
+                      <!-- <span class="badge label-1">Seasonal</span> -->
+
+                      <span class="span title-2">${{item[3]}}</span>
+                    </div>
+
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <!-- Snacks -->
+          <div class="container">
+            <p class="section-subtitle"></p>
+            <h2 class="headline-1 section-title text-center">Snacks</h2>
+            <br>
+            <ul class="grid-list">
+              {% for snack in snack_list %}
+              <li>
+                <div class="menu-card hover:card">
+
+                  <figure class="card-banner img-holder" style="--width: 100; --height: 100;">
+                    <img src='{{snack[4]}}' width="40" height="40" loading="lazy" alt={{snack[1]}} class="img-cover">
+                  </figure>
+
+                  <div>
+
+                    <div class="title-wrapper">
+                      <h3 class="title-3">
+                        <a class="card-title">{{snack[1]}}</a>
+                      </h3>
+
+                      <!-- <span class="badge label-1">Seasonal</span> -->
+
+                      <span class="span title-2">${{snack[3]}}</span>
+                    </div>
+
+                  </div>
+
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="col-25">
+      <div class="container">
+        <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>0</b></span>
+        </h4>
+        <p><a>Product 1</a> <span class="price">$15</span></p>
+        <p><a>Product 2</a> <span class="price">$5</span></p>
+        <p><a>Product 3</a> <span class="price">$8</span></p>
+        <p><a>Product 4</a> <span class="price">$2</span></p>
+        <hr>
+        <p>Total <span class="price" style="color:black"><b>$30</b></span></p>
+      </div>
+    </div>
+  </div>
+
+</body>
+<script>
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('increase')) {
+    const itemId = event.target.getAttribute('data-id');
+    const countElement = document.getElementById(`count_${itemId}`);
+    let count = parseInt(countElement.textContent);
+    count++;
+    countElement.textContent = count;
+  } else if (event.target.classList.contains('decrease')) {
+    const itemId = event.target.getAttribute('data-id');
+    const countElement = document.getElementById(`count_${itemId}`);
+    let count = parseInt(countElement.textContent);
+    if (count > 0) {
+      count--;
+      countElement.textContent = count;
+    }
+  }
+});
+
+</script>
+
+</html>
