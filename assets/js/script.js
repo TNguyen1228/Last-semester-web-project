@@ -200,3 +200,4 @@ function submitBooking() {
   })
   .catch(error => console.error('Error:', error));
 }
+

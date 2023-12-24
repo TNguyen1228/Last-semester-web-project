@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, Form, HTTPException, Request, Response
+from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
@@ -33,7 +33,7 @@ customer = mysql.connector.connect(
 cursor=customer.cursor()
 
 admin=mysql.connector.connect(
-    host="localhost",
+    host="127.0.0.1",
     user="root",
     password="",
     database="coffee_management"
@@ -88,15 +88,6 @@ users = {
     "admin": {"username": "admin", "password": "admin"}
     # Add more users as needed
 }
-
-# @app.post('/login-check')
-# async def login(username: str=Form(), password: str=Form()):
-
-#     # Check if the user exists in the database
-#     if username in users_db and users_db[username]["password"] == password:
-#         return Response(status_code=200)
-#     else:
-#         raise HTTPException(status_code=401)
     
 # Dependency to access the session
 def get_session(request: Request):
@@ -121,12 +112,63 @@ async def dashboard(request: Request):
     user = request.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
-    admin_cursor.execute(f"SHOW TABLES");
-    table_list=admin_cursor.fetchall();
     # Only accessible if authenticated
-    return templates.TemplateResponse('dashboard.html',{"request": request, "tables":table_list})
+    return templates.TemplateResponse('dashboard.html',{"request": request})
 
 @app.get('/logout')
 async def logout(request: Request):
     request.session.clear()  # Clear the session
     return Response(status_code=200)  
+
+@app.get("/employees", response_class=HTMLResponse)
+async def getNhanVien(request: Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute("SELECT * FROM employees")
+    result = admin_cursor.fetchall()
+    return templates.TemplateResponse("employees.html", {"request": request, "ls":result})
+
+@app.delete("/delete-employee")
+async def deleteEmployee(request: Request, employee_id: str = Form(...)):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute("DELETE FROM employees WHERE employee_id = %s", (employee_id,))
+    admin.commit()
+    return Response(status_code=303)
+
+@app.get("/new-employee", response_class=HTMLResponse)
+async def getNewEmployee(requests: Request):
+    return templates.TemplateResponse("new_employee.html", {"request": requests})
+@app.post("/add-employee", response_class=HTMLResponse)
+async def addEmployee(
+    request: Request,
+    new_id: str = Form(...),
+    new_name: str = Form(...),
+    new_position: str = Form(...),
+    new_contact_info: str = Form(...),
+    new_salary: float = Form(...),
+    new_hire_date: str = Form(...),
+):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    global error_message  
+    cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (new_id,))
+    existing_employee = cursor.fetchone()
+
+    if existing_employee:
+        error_message = "ID already exited"
+        return templates.TemplateResponse("new_employee.html", {"request": request, "error_message": error_message})
+    
+    admin.execute(
+        """
+        INSERT INTO employees (employee_id, name, position, contact_info, salary, hire_date)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        """,
+        (new_id, new_name, new_position, new_contact_info, new_salary, new_hire_date),
+    )
+    admin.commit()
+    error_message = ""
+    return Response(status_code=303)

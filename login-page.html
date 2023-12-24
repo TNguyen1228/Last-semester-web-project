@@ -10,14 +10,14 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-  
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: "Poppins", sans-serif;
     }
-  
+
     body {
       display: flex;
       justify-content: center;
@@ -27,7 +27,7 @@
       background-size: cover;
       background-position: center;
     }
-  
+
     .wrapper {
       width: 520px;
       background-color: rgba(0, 0, 0, .75);
@@ -36,19 +36,19 @@
       padding: 30px 40px;
       flex-direction: column;
     }
-  
+
     .wrapper h1 {
       font-size: 36px;
       text-align: center;
     }
-  
+
     .wrapper .input-box {
       position: relative;
       width: 100%;
       height: 50px;
       margin: 30px 0;
     }
-  
+
     .input-box input {
       width: 100%;
       height: 100%;
@@ -61,11 +61,11 @@
       color: #fff;
       padding: 20px 45px 20px 20px;
     }
-  
+
     .input-box input::placeholder {
       color: #fff;
     }
-  
+
     .input-box i {
       position: absolute;
       right: 20px;
@@ -73,14 +73,14 @@
       transform: translateY(-50%);
       font-size: 20px;
     }
-  
+
     .wrapper .remember-forgot {
       display: flex;
       justify-content: space-between;
       font-size: 14px;
       margin: -15px 0 15px;
     }
-  
+
     .wrapper .button {
       width: 100%;
       height: 45px;
@@ -107,9 +107,10 @@
         <i class="bx bx-user"></i>
       </div>
       <div class="input-box">
-        <input type="password" placeholder="Password" name="password" autocomplete="off" class="input-field" id="passInput" required>
+        <input type="password" placeholder="Password" name="password" autocomplete="off" class="input-field"
+          id="passInput" required>
         <i class="bx bxs-lock-alt"></i>
-        
+
       </div>
       <input type="checkbox" onclick="showpassword()">Show Password
       <button type="submit" class="button">Login</button>
@@ -117,26 +118,26 @@
   </div>
   <script>
     function submitForm(event) {
-            event.preventDefault();
-            const form = document.getElementById('loginForm');
-            const formData = new FormData(form);
+      event.preventDefault();
+      const form = document.getElementById('loginForm');
+      const formData = new FormData(form);
 
-            fetch('/login-check', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Redirect to a new page or perform other actions upon successful login
-                    window.location.href = '/dashboard'; // Example redirect to dashboard
-                } else {
-                    // Handle login failure (show error message, etc.)
-                    window.alert('Login failed, try again.');
-                    document.getElementById('loginForm').reset();
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
+      fetch('/login-check', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          if (response.ok) {
+            // Redirect to a new page or perform other actions upon successful login
+            window.location.href = '/dashboard'; // Example redirect to dashboard
+          } else {
+            // Handle login failure (show error message, etc.)
+            window.alert('Login failed, try again.');
+            document.getElementById('loginForm').reset();
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
     function showpassword() {
       var x = document.getElementById("passInput");
       if (x.type === "password") {

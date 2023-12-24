@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/stat.css">
+    <title>MySQL</title>
+</head>
+
+<body>
+    <main class="table" id="customers_table">
+        <section class="table__header">
+            <h1>Staffs's information</h1>
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="assets/images/icon-search.png" alt="">
+            </div>
+            <a href="/new-employee"><button id="newStaffButton" style="text-decoration: none;">New Staff</button></a>
+        </section>
+        <section class="table__body">
+            <table>
+                <thead>
+                    <tr>
+                        <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Staff <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Position <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Salary <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Hire_Date <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in ls %}
+                    <tr>
+                        <td>{{row[0]}}</td>
+                        <td>{{row[1]}}</td>
+                        <td>{{row[2]}}</td>
+                        <td>{{row[3]}}</td>
+                        <td>{{row[4]}}</td>
+                        <td>{{row[5]}}</td>
+                        <td>
+                            <form action="/update-employee" method="get">
+                                <input type="hidden" name="employee_id" value="{{ row[0] }}">
+                                <button id="updateButton" type="submit">Update</button>
+                            </form>
+                            <br>
+                            <form action="/delete-employee" method="DELETE" id="delete-employee">
+                                <input type="hidden" name="employee_id" value="{{row[0]}}">
+                                <button id="fireButton" type="button" onclick="myFunction(this.form)">Fire</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+    <script>
+        function myFunction(form) {
+            var txt;
+            if (confirm("Are you sure you want to fire this employee?")) {
+                // User clicked OK, submit the form
+                form.submit();
+                const formBooking = document.getElementById('delete-employee');
+                const formBookingData = new FormData(formBooking);
+
+                fetch('/delete-employee', {
+                    method: 'DELETE',
+                    body: formBookingData
+                })
+                .then(response => {
+                    if (response.status=303) {
+                        window.alert('Delete complete. Thank you for your service!');
+                        // Redirect to a new page or perform other actions upon successful login
+                        window.location.reload(); 
+                    }
+                })
+            } else {
+                // User clicked Cancel, do nothing
+            }
+        }
+    </script>
+    <script src="assets/js/stat.js"></script>
+</body>
+
+</html>
