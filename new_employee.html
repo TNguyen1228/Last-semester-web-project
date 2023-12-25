@@ -271,11 +271,11 @@
 <body>
 
     <div class="wrapper">
-        <form id="add-employee" method="post" action="/add-employee" onsubmit="responseCode()">
+        <form id="add-employee" method="post" action="/add-employee">
             <h1>New family member</h1>
             <div class="input-box">
                 <label for="new_id">ID:</label>
-                <input type="text" id="new_id" name="new_id" placeholder="I.e: ID_222222" autocomplete="off" required>
+                <input type="text" id="new_id" name="new_id" placeholder="I.e: ID_222222" required>
             </div>
             <div class="input-box">
                 <label for="new_name">Name:</label>
@@ -311,22 +311,6 @@
         const errorMessage = '{{error_message}}';
         if (errorMessage) {
             alert(errorMessage);
-        }
-        function responseCode() {
-            const formBooking = document.getElementById('add-employee');
-            const formBookingData = new FormData(formAdding);
-
-            fetch('/add-employee', {
-                method: 'POST',
-                body: formAdding
-            })
-            .then(response => {
-                if (response.status = 303) {
-                    window.alert('Adding complete. Welcome!');
-                    // Redirect to a new page or perform other actions upon successful login
-                    window.location.reload();
-                }
-            })
         }
     </script>
     <script src="assets/js/stat.js"></script>

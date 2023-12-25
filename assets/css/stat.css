@@ -1,50 +1,65 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
 
-body  {
+body {
     background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
-  background-size:cover;
-        -webkit-animation: slidein 100s;
-        animation: slidein 100s;
+    background-size: cover;
+    -webkit-animation: slidein 100s;
+    animation: slidein 100s;
 
-        -webkit-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 
-        -webkit-animation-iteration-count: infinite;
-        animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 
-        -webkit-animation-direction: alternate;
-        animation-direction: alternate;              
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
 }
 
 @-webkit-keyframes slidein {
-from {background-position: top; background-size:3000px; }
-to {background-position: -100px 0px;background-size:2750px;}
+    from {
+        background-position: top;
+        background-size: 3000px;
+    }
+
+    to {
+        background-position: -100px 0px;
+        background-size: 2750px;
+    }
 }
 
 @keyframes slidein {
-from {background-position: top;background-size:3000px; }
-to {background-position: -100px 0px;background-size:2750px;}
+    from {
+        background-position: top;
+        background-size: 3000px;
+    }
+
+    to {
+        background-position: -100px 0px;
+        background-size: 2750px;
+    }
 
 }
-.center
-{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(75, 75, 250, 0.3);
-  border-radius: 3px;
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(75, 75, 250, 0.3);
+    border-radius: 3px;
 }
-.center h1{
-  text-align:center;
-  color:white;
-  font-family: 'Source Code Pro', monospace;
-  text-transform:uppercase;
+
+.center h1 {
+    text-align: center;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    text-transform: uppercase;
 }
 
 * {
@@ -54,12 +69,15 @@ to {background-position: -100px 0px;background-size:2750px;}
     box-sizing: border-box;
     font-family: sans-serif;
 }
+
 @media print {
- .table, .table__body {
-  overflow: visible;
-  height: auto !important;
-  width: auto !important;
- }
+
+    .table,
+    .table__body {
+        overflow: visible;
+        height: auto !important;
+        width: auto !important;
+    }
 }
 
 /*@page {
@@ -71,9 +89,10 @@ body {
     min-height: 100vh;
     /* background: url("/images/html_table.jpg") center / cover; */
     display: flex;
-    justify-content: center;
     align-items: center;
     font-family: 'Exo', sans-serif;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 main.table {
@@ -145,18 +164,18 @@ main.table {
 }
 
 
-.table__body::-webkit-scrollbar{
+.table__body::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
 }
 
-.table__body::-webkit-scrollbar-thumb{
+.table__body::-webkit-scrollbar-thumb {
     border-radius: .5rem;
     background-color: #0004;
     visibility: hidden;
 }
 
-.table__body:hover::-webkit-scrollbar-thumb{ 
+.table__body:hover::-webkit-scrollbar-thumb {
     visibility: visible;
 }
 
@@ -174,7 +193,9 @@ td img {
     vertical-align: middle;
 }
 
-table, th, td {
+table,
+th,
+td {
     border-collapse: collapse;
     padding: 1rem;
     text-align: left;
@@ -225,6 +246,7 @@ tbody tr.hide td img {
     height: 0;
     transition: .2s ease-in-out .5s;
 }
+
 @media (max-width: 1000px) {
     td:not(:first-of-type) {
         min-width: 12.1rem;
@@ -237,15 +259,15 @@ thead th span.icon-arrow {
     height: 1.3rem;
     border-radius: 50%;
     border: 1.4px solid transparent;
-    
+
     text-align: center;
     font-size: 1rem;
-    
+
     margin-left: .5rem;
     transition: .2s ease-in-out;
 }
 
-thead th:hover span.icon-arrow{
+thead th:hover span.icon-arrow {
     border: 1.4px solid #6c00bd;
 }
 
@@ -253,16 +275,17 @@ thead th:hover {
     color: #6c00bd;
 }
 
-thead th.active span.icon-arrow{
+thead th.active span.icon-arrow {
     background-color: #6c00bd;
     color: #fff;
 }
 
-thead th.asc span.icon-arrow{
+thead th.asc span.icon-arrow {
     transform: rotate(180deg);
 }
 
-thead th.active,tbody td.active {
+thead th.active,
+tbody td.active {
     color: #6c00bd;
 }
 
@@ -279,7 +302,7 @@ thead th.active,tbody td.active {
     transition: .2s ease-in-out;
 }
 
-.export__file .export__file-btn:hover { 
+.export__file .export__file-btn:hover {
     background-color: #fff;
     transform: scale(1.15);
     cursor: pointer;
@@ -292,7 +315,7 @@ thead th.active,tbody td.active {
 .export__file .export__file-options {
     position: absolute;
     right: 0;
-    
+
     width: 12rem;
     border-radius: .5rem;
     overflow: hidden;
@@ -301,24 +324,24 @@ thead th.active,tbody td.active {
     opacity: 0;
     transform: scale(.8);
     transform-origin: top right;
-    
+
     box-shadow: 0 .2rem .5rem #0004;
-    
+
     transition: .2s;
 }
 
-.export__file input:checked + .export__file-options {
+.export__file input:checked+.export__file-options {
     opacity: 1;
     transform: scale(1);
     z-index: 100;
 }
 
-.export__file .export__file-options label{
+.export__file .export__file-options label {
     display: block;
     width: 100%;
     padding: .6rem 0;
     background-color: #f2f2f2;
-    
+
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -326,18 +349,18 @@ thead th.active,tbody td.active {
     transition: .2s ease-in-out;
 }
 
-.export__file .export__file-options label:first-of-type{
+.export__file .export__file-options label:first-of-type {
     padding: 1rem 0;
     background-color: #86e49d !important;
 }
 
-.export__file .export__file-options label:hover{
+.export__file .export__file-options label:hover {
     transform: scale(1.05);
     background-color: #fff;
     cursor: pointer;
 }
 
-.export__file .export__file-options img{
+.export__file .export__file-options img {
     width: 2rem;
     height: auto;
 }
@@ -346,10 +369,10 @@ thead th.active,tbody td.active {
     position: relative;
     display: inline-block;
     cursor: pointer;
-  }
-  
-  /* The actual popup (appears on top) */
-  .popup .popuptext {
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -362,10 +385,10 @@ thead th.active,tbody td.active {
     bottom: 125%;
     left: 50%;
     margin-left: -80px;
-  }
-  
-  /* Popup arrow */
-  .popup .popuptext::after {
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -374,92 +397,119 @@ thead th.active,tbody td.active {
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-  }
-  
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-  .popup .show {
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
     visibility: visible;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s
-  }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-  }
-  #fireButton {
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+#fireButton {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 45px;
-    background-color: #db7373; /* Màu xanh lá cây nhạt */
+    background-color: #db7373;
+    /* Màu xanh lá cây nhạt */
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
     font-size: 16px;
-    color: #ede6e6; /* Màu xanh đậm */
+    color: #ede6e6;
+    /* Màu xanh đậm */
     font-weight: 600;
     transition: background-color 0.3s;
 }
 
 #fireButton:hover {
-    background-color: #9f3434; /* Màu xanh lá cây đậm khi hover */
+    background-color: #9f3434;
+    /* Màu xanh lá cây đậm khi hover */
     transform: scale(1.1);
 }
+
 #updateButton {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 45px;
-    background-color: #6588c1; /* Màu xanh lá cây nhạt */
+    background-color: #6588c1;
+    /* Màu xanh lá cây nhạt */
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(58, 21, 21, 0.1);
     cursor: pointer;
     font-size: 16px;
-    color: #eaebec; /* Màu xanh đậm */
+    color: #eaebec;
+    /* Màu xanh đậm */
     font-weight: 600;
     transition: background-color 0.3s;
 }
 
 #updateButton:hover {
-    background-color: #34619f; /* Màu xanh lá cây đậm khi hover */
+    background-color: #34619f;
+    /* Màu xanh lá cây đậm khi hover */
     transform: scale(1.1);
 }
+
 #newStaffButton {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 60px; /* Điều chỉnh chiều cao của nút */
-    padding: 0 30px; /* Tăng giá trị padding */
-    background-color: #18a839; /* Màu xanh lá cây nhạt */
+    height: 60px;
+    /* Điều chỉnh chiều cao của nút */
+    padding: 0 30px;
+    /* Tăng giá trị padding */
+    background-color: #18a839;
+    /* Màu xanh lá cây nhạt */
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
-    font-size: 20px; /* Tăng giá trị font-size */
-    color: #ede6e6; /* Màu xanh đậm */
+    font-size: 20px;
+    /* Tăng giá trị font-size */
+    color: #ede6e6;
+    /* Màu xanh đậm */
     font-weight: 600;
     transition: background-color 0.3s;
 }
 
 #newStaffButton:hover {
-    background-color: #349f36; /* Màu xanh lá cây đậm khi hover */
+    background-color: #349f36;
+    /* Màu xanh lá cây đậm khi hover */
     transform: scale(1.1);
 }
+
 a {
-    text-decoration: none; /* Loại bỏ gạch chân từ tất cả các liên kết */
-}   
+    text-decoration: none;
+    /* Loại bỏ gạch chân từ tất cả các liên kết */
+}

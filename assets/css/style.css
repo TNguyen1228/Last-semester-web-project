@@ -700,7 +700,7 @@ body.nav-active { overflow: hidden; }
 
 .navbar-link::after { display: none; }
 
-.navbar-link .span { transition: var(--transition-1); }
+.navbar-link .span { transition: var(--transition-1); font-size: 14px;}
 
 .navbar-link:is(:hover, :focus-visible, .active) .span {
   color: var(--gold-crayola);
@@ -937,7 +937,7 @@ body.nav-active { overflow: hidden; }
   #ABOUT
 \*-----------------------------------*/
 
-.about .section-text { margin-block: 15px 30px; }
+.about .section-text { margin-block: 15px 30px; line-height: 3;}
 
 .about .btn {
   margin-inline: auto;
@@ -1949,7 +1949,7 @@ textarea.input-field {
 
   .navbar-list {
     display: flex;
-    gap: 30px;
+    gap: 40px;
   }
 
   .navbar-item { border-block-start: none; }

@@ -217,5 +217,5 @@ async def purchase(request: Request):
 
     cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
     snack_list=cursor.fetchall()
-    return templates.TemplateResponse("purchase.html",{"request": request, "records":coffee_list, 
+    return templates.TemplateResponse("purchase.html",{"request": request, "coffee_list":coffee_list, 
                                                    "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
