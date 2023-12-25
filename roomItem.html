@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/stat.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
-    <title>Staff information</title>
+    <title>Item information</title>
 </head>
 
 <body>
@@ -30,44 +30,39 @@
     <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
     <main class="table" id="customers_table">
         <section class="table__header">
-            <h1>Staffs's information</h1>
+            <h1>Room Item</h1>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="assets/images/icon-search.png" alt="">
             </div>
-            <a href="/new-employee"><button id="newStaffButton" style="text-decoration: none;">New Staff</button></a>
+            <a href="/new-item"><button id="newStaffButton" style="text-decoration: none;">New Item</button></a>
         </section>
         <section class="table__body">
             <table>
                 <thead>
                     <tr>
                         <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Staff <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Position <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Phone Number</th>
-                        <th> Salary <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Hire_Date </th>
+                        <th> Room <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Quantity</th>
+                        <th> Condition <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Last Checked </th>
                         <th> Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in ls %}
+                    {% for item in item_list %}
                     <tr>
-                        <td>{{row[0]}}</td>
-                        <td>{{row[1]}}</td>
-                        <td>{{row[2]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                        <td>{{row[5]}}</td>
+                        <td>{{item[0]}}</td>
+                        <td>{{item[1]}}</td>
+                        <td>{{item[2]}}</td>
+                        <td>{{item[3]}}</td>
+                        <td>{{item[4]}}</td>
+                        <td>{{item[5]}}</td>
                         <td>
-                            <form action="/update-employee" method="get">
-                                <input type="hidden" name="employee_id" value="{{row[0] }}">
+                            <form action="/update-roomItem" method="get">
+                                <input type="hidden" name="employee_id" value="{{item[0] }}">
                                 <button id="updateButton" type="submit">Update</button>
-                            </form>
-                            <br>
-                            <form action="/delete-employee" method="post">
-                                <input type="hidden" name="employee_id" value="{{row[0]}}">
-                                <button id="fireButton" type="button" onclick="myFunction(this.form)" >Fire</button>
                             </form>
                         </td>
                     </tr>
@@ -79,7 +74,7 @@
     </main>
     <script>
         function myFunction(form) {
-            if (confirm("Are you sure you want to fire this employee?")) {
+            if (confirm("Are you sure you want to delete?")) {
                 // User clicked OK, submit the form
                 form.submit();
                 window.alert("Complete");

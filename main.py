@@ -70,7 +70,7 @@ async def about():
 async def booking():
     return
 
-@app.post('/submit_booking')
+@app.post('/submit_booking', response_class=HTMLResponse)
 async def submit_form(name: str = Form(),
                     phone: str = Form(),
                     person: str = Form(),
@@ -82,10 +82,11 @@ async def submit_form(name: str = Form(),
     data = (name, phone, person, reservation_date, time, message)
     cursor.execute(insert_query, data)        
     customer.commit()
-    return Response(status_code=200)
+    return RedirectResponse(url='/', status_code=303)
 
 users = {
-    "admin": {"username": "admin", "password": "admin"}
+    "admin": {"username": "admin", "password": "admin"},
+    "staff": {"username": "staff", "password": "staff"}
     # Add more users as needed
 }
     
@@ -125,18 +126,15 @@ async def getNhanVien(request: Request):
     user = request.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
-    admin_cursor.execute("SELECT * FROM employees")
+    admin_cursor.execute("SELECT `employee_id`, `name`, `position`, `contact_info`, `salary`, DATE_FORMAT(`hire_date`, '%d/%m/%Y') AS formatted_date FROM `employees` ")
     result = admin_cursor.fetchall()
     return templates.TemplateResponse("employees.html", {"request": request, "ls":result})
 
-@app.delete("/delete-employee")
-async def deleteEmployee(request: Request, employee_id: str = Form(...)):
-    # user = request.session.get("user")
-    # if not user:
-    #     return RedirectResponse(url='/login')
-    admin_cursor.execute("DELETE FROM employees WHERE employee_id = %s", (employee_id,))
+@app.post("/delete-employee")
+async def deleteEmployee(employee_id: str = Form(...)):
+    admin_cursor.execute(f"DELETE FROM employees WHERE employee_id = '{employee_id}'")
     admin.commit()
-    return Response(status_code=303)
+    return RedirectResponse(url='/employees',status_code=303)
 
 @app.get("/new-employee", response_class=HTMLResponse)
 async def getNewEmployee(request: Request):
@@ -146,7 +144,6 @@ async def getNewEmployee(request: Request):
     return templates.TemplateResponse("new_employee.html", {"request": request})
 @app.post("/add-employee", response_class=HTMLResponse)
 async def addEmployee(
-    request: Request,
     new_id: str = Form(...),
     new_name: str = Form(...),
     new_position: str = Form(...),
@@ -157,14 +154,8 @@ async def addEmployee(
     # user = request.session.get("user")
     # if not user:
     #     return RedirectResponse(url='/login')
-    global error_message  
-    cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (new_id,))
-    existing_employee = cursor.fetchone()
-
-    if existing_employee:
-        error_message = "ID already exited"
-        return templates.TemplateResponse("new_employee.html", {"request": request, "error_message": error_message})
-    
+    # cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (new_id,))
+    # existing_employee = cursor.fetchone()
     admin_cursor.execute(
         """
         INSERT INTO employees (employee_id, name, position, contact_info, salary, hire_date)
@@ -173,8 +164,8 @@ async def addEmployee(
         (new_id, new_name, new_position, new_contact_info, new_salary, new_hire_date),
     )
     admin.commit()
-    error_message = ""
-    return RedirectResponse(url="/employees", status_code=303)
+    
+    return Response(status_code=303)
 
 @app.get("/update-employee", response_class=HTMLResponse)
 async def getUpdateEmployee(request: Request, employee_id: str = Query(...)):
@@ -206,6 +197,10 @@ async def updateEmployee(
 @app.get('/purchase',response_class=HTMLResponse)
 async def purchase(request: Request):
 
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+
     cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'CF%' ")
     coffee_list=cursor.fetchall()
 
@@ -219,3 +214,29 @@ async def purchase(request: Request):
     snack_list=cursor.fetchall()
     return templates.TemplateResponse("purchase.html",{"request": request, "coffee_list":coffee_list, 
                                                    "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
+
+@app.get('/booking_table', response_class=HTMLResponse)
+async def booking(request: Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    
+    admin_cursor.execute(f"SELECT id, name, phone, person, DATE_FORMAT(reservation_date, '%d/%m/%Y') AS formatted_date, time, message FROM `customers_booking`")
+    booking_list=admin_cursor.fetchall()
+    return templates.TemplateResponse("booking.html",{"request": request, "booking_list":booking_list})
+
+@app.post("/delete-booking", response_class=HTMLResponse)
+async def deleteEmployee(id: int = Form()):
+    admin_cursor.execute(f"DELETE FROM customers_booking WHERE id ={id}")
+    admin.commit()
+    return RedirectResponse(url='/booking_table',status_code=303)
+
+@app.get('/room_item', response_class=HTMLResponse)
+async def room_item(request:Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute(f"SELECT `item_id`, `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items`")
+    item_list=admin_cursor.fetchall()
+    return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list})
+    

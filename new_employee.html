@@ -10,6 +10,7 @@
     <title>Add Staff</title>
     <link rel="icon" href="./assets/favicon.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css/dashboard.css">
     <style>
         @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
 
@@ -176,15 +177,6 @@
             margin-right: 3px;
         }
 
-        .remember-forgot a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .remember-forgot a:hover {
-            text-decoration: underline;
-        }
-
         .wrapper .button {
             width: 100%;
             height: 45px;
@@ -269,51 +261,95 @@
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <form id="add-employee" method="post" action="/add-employee">
-            <h1>New family member</h1>
-            <div class="input-box">
-                <label for="new_id">ID:</label>
-                <input type="text" id="new_id" name="new_id" placeholder="I.e: ID_222222" required>
-            </div>
-            <div class="input-box">
-                <label for="new_name">Name:</label>
-                <input type="text" id="new_name" name="new_name" placeholder="Jake The Dog" required>
-            </div>
-            <div class="input-box">
-                <label for="new_position">Position:</label>
-                <input type="text" id="new_position" name="new_position" placeholder="Bartender/Servant/..." required>
-            </div>
-            <div class="input-box">
-                <label for="new_contact_info">Contact Info:</label>
-                <input type="text" id="new_contact_info" name="new_contact_info" placeholder="Phone number" required>
-            </div>
-            <div class="input-box">
-                <label for="new_salary">Salary:</label>
-                <input type="number" id="new_salary" name="new_salary" placeholder="money" required>
-            </div>
-            <div class="input-box">
-                <label for="new_hire_date">Hire Date:</label>
-                <input type="date" id="new_hire_date" name="new_hire_date" required>
-            </div>
-            <div id="error-popup" class="error-popup">
-                <span class="close" onclick="closeErrorPopup()">&times;</span>
-                <p id="error-message"></p>
-            </div>
-            <br>
-            <button type="submit" onclick="validateForm(event);">Add Employee</button>
-
-        </form>
+    <div id="mySidebar" class="sidebar">
+        <a href="/dashboard">Dashboard</a>
+        <a onclick="dropDownList()" class="dropbtn">Show Table</a>
+        <div id="dropdownTable" class="dropdown-content">
+            <a href="#">Customer</a>
+            <a href="/booking_table">Booking</a>
+            <a href="/employees">Employees</a>
+            <a href="#">Menu</a>
+            <a href="/room_item">Room items</a>
+            <a href="#">Room Management</a>
+        </div>
+        <a href="/purchase">Purchase</a>
+        <a href="#">Contact</a>
     </div>
+    <button class="openbtn" onclick="toggleNav()"
+        style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
+    <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
+    <main>
+        <div class="wrapper">
+            <form id="add-employee" method="post" action="/add-employee" onsubmit="validateForm(event);">
+                <h1>New family member</h1>
+                <div class="input-box">
+                    <label for="new_id">ID:</label>
+                    <input type="text" id="new_id" name="new_id" placeholder="I.e: ID_222222" required>
+                </div>
+                <div class="input-box">
+                    <label for="new_name">Name:</label>
+                    <input type="text" id="new_name" name="new_name" placeholder="Jake The Dog" required>
+                </div>
+                <div class="input-box">
+                    <label for="new_position">Position:</label>
+                    <input type="text" id="new_position" name="new_position" placeholder="Bartender/Servant/..."
+                        required>
+                </div>
+                <div class="input-box">
+                    <label for="new_contact_info">Contact Info:</label>
+                    <input type="text" id="new_contact_info" name="new_contact_info" placeholder="Phone number"
+                        required>
+                </div>
+                <div class="input-box">
+                    <label for="new_salary">Salary:</label>
+                    <input type="number" id="new_salary" name="new_salary" placeholder="Money" required>
+                </div>
+                <div class="input-box">
+                    <label for="new_hire_date">Hire Date:</label>
+                    <input type="date" id="new_hire_date" name="new_hire_date" placeholder="DD/MM/YYYY" required>
+                </div>
+                <div id="error-popup" class="error-popup">
+                    <span class="close" onclick="closeErrorPopup()">&times;</span>
+                    <p id="error-message"></p>
+                </div>
+                <br>
+                <button type="submit">Add Employee</button>
+
+            </form>
+        </div>
+    </main>
+
 
     <script>
-        const errorMessage = '{{error_message}}';
-        if (errorMessage) {
-            alert(errorMessage);
-        }
+        const form = document.getElementById('add-employee'); // Replace 'yourFormId' with your actual form ID
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/add-employee', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.status === 500) {
+                        // Handle the error here, for example, display it in an alert
+                        alert("ID already exited");
+                        window.location.reload();
+                }
+
+                if (response.status === 303) {
+                        // Handle the error here, for example, display it in an alert
+                        alert("Welcome dude!");
+                        window.location.reload();
+                } 
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
     </script>
     <script src="assets/js/stat.js"></script>
+    <script src="assets/js/dashboard.js"></script>
 </body>
 
 </html>

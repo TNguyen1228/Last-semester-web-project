@@ -183,21 +183,4 @@ document.getElementById('reservation-date').min = formattedDate;
 // Set the default value of the input field to today's date
 document.getElementById('reservation-date').value = formattedDate;
 
-function submitBooking() {
-  const formBooking = document.getElementById('bookingForm');
-  const formBookingData = new FormData(formBooking);
-
-  fetch('/submit_booking', {
-      method: 'POST',
-      body: formBookingData
-  })
-  .then(response => {
-      if (response.ok) {
-        window.alert('Booking successful. Thank you!');
-        // Redirect to a new page or perform other actions upon successful login
-        window.location.href = '/'; 
-      }
-  })
-  .catch(error => console.error('Error:', error));
-}
 

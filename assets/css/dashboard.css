@@ -25,7 +25,7 @@ body {
 }
 
 .sidebar a:hover {
-    color: #f1f1f1;
+    color: #f1f1f146;
 }
 
 .sidebar .closebtn {
@@ -105,7 +105,7 @@ body {
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color: #8a8080;
 }
 
 .show {

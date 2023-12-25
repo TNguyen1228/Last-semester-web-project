@@ -6,12 +6,25 @@ if (search) {
 }
 
 function searchTable() {
+    let matchedRows = [];
     table_rows.forEach((row, i) => {
         let table_data = row.textContent.toLowerCase(),
             search_data = search.value.toLowerCase();
-        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-        row.style.setProperty('--delay', i / 25 + 's');
-    })
+        const isMatch = table_data.indexOf(search_data) >= 0;
+        row.style.display = isMatch ? '' : 'none';
+        row.style.setProperty('--delay', isMatch ? matchedRows.length / 25 + 's' : '');
+        if (isMatch) {
+            matchedRows.push(row);
+        }
+    });
+
+    // Rearrange rows based on matches
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = ''; // Clear existing tbody content
+
+    matchedRows.forEach((matchedRow) => {
+        tbody.appendChild(matchedRow); // Append matched rows to tbody
+    });
     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
     });
@@ -41,9 +54,7 @@ function sortTable(column, sort_asc) {
 }
 const deleteButton = document.querySelector('#deleteButton');
 const confirmModal = document.querySelector('#confirmModal');
-// deleteButton.addEventListener('click', function() {
-//     confirmModal.style.display = 'block';
-// });
+
 document.addEventListener("DOMContentLoaded", function () {
     const newStaffButton = document.querySelector('#newStaffButton');
     if (newStaffButton) {
@@ -58,13 +69,9 @@ function validateForm(event) {
     if (!idPattern.test(idValue)) {
         showErrorPopup("The ID is not ID_(number) form");
         event.preventDefault();
-        return;
-    }
-    if (isIdDuplicated(idValue)) {
-        showErrorPopup("ID already exited");
-        event.preventDefault();
     }
 }
+
 function showErrorPopup(message) {
     var errorPopup = document.getElementById('error-popup');
     var errorMessage = document.getElementById('error-message');

@@ -554,7 +554,7 @@
 
           <div class="form reservation-form bg-black-10">
 
-            <form id="bookingForm" class="form-left">
+            <form id="bookingForm" class="form-left" method="post" action="/submit_booking">
 
               <h2 class="headline-1 text-center">Online Reservation</h2>
 
@@ -575,10 +575,11 @@
                 <div class="icon-wrapper">
                   <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
                   <select name="person" class="input-field">
+                    <option value="Less than 5 person">Less than 5 Person</option>
                     <option value="6-8 person">6-8 Person</option>
                     <option value="12-15 person">12-15 Person</option>
                     <option value="20-25 person">20-25 Person</option>
-                    <option value="other">Other(Leave the message)</option>
+                    <option value="Other">Other(Leave the message)</option>
                   </select>
 
 
@@ -621,7 +622,7 @@
 
               <textarea name="message" placeholder="Message" autocomplete="off" class="input-field"></textarea>
 
-              <button type="submit" class="btn btn-secondary" onclick="submitBooking()">
+              <button type="submit" class="btn btn-secondary">
                 <span class="text text-1">Book A Room</span>
 
                 <span class="text text-2" aria-hidden="true">Book A Room</span>
