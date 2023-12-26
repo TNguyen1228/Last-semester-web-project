@@ -15,11 +15,11 @@
         <a href="/dashboard">Dashboard</a>
         <a onclick="dropDownList()" class="dropbtn">Show Table</a>
         <div id="dropdownTable" class="dropdown-content">
-            <a href="#">Customer</a>
+            <a href="/customer-info">Customer</a>
             <a href="/booking_table">Booking</a>
             <a href="/employees">Employees</a>
             <a href="/menu_item">Menu Items</a>
-            <a href="/room_item">Room items</a>
+            <a href="/room-item">Room items</a>
             <a href="#">Room Management</a>
         </div>
         <a href="/purchase">Purchase</a>
@@ -30,38 +30,34 @@
     <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
     <main class="table" id="customers_table">
         <section class="table__header">
-            <h1>Room Item</h1>
+            <h1>Menu Item</h1>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
                 <img src="assets/images/icon-search.png" alt="">
             </div>
-            <a href="/new-item"><button id="newStaffButton" style="text-decoration: none;">New Item</button></a>
         </section>
         <section class="table__body">
             <table>
                 <thead>
                     <tr>
                         <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Room <span class="icon-arrow">&UpArrow;</span></th>
                         <th> Name <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Quantity</th>
-                        <th> Condition <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Last Checked </th>
-                        <th> Action</th>
+                        <th> Description <span class="icon-arrow">&UpArrow;</span></th>
+                        <th> Price</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in item_list %}
+                    {% for item in menu_items %}
                     <tr>
                         <td>{{item[0]}}</td>
                         <td>{{item[1]}}</td>
                         <td>{{item[2]}}</td>
                         <td>{{item[3]}}</td>
-                        <td>{{item[4]}}</td>
-                        <td>{{item[5]}}</td>
+                        
                         <td>
-                            <form action="/update-roomItem" method="get">
-                                <input type="hidden" name="employee_id" value="{{item[0] }}">
+                            <form action="/update-menu" method="get">
+                                <input type="hidden" name="items_id" value="{{item[0]}}">
                                 <button id="updateButton" type="submit">Update</button>
                             </form>
                         </td>

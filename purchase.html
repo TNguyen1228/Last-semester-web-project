@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./assets/css/dashboard.css">
   <link rel="icon" href="/assets/favicon.png">
   <title>PURCHASE</title>
@@ -96,6 +96,7 @@
       border-radius: 50%;
     }
 
+    .button-container button:hover,
     .cbutton:hover {
       background-color: #787878;
     }
@@ -103,6 +104,7 @@
     a {
       color: #2196F3;
       text-align: center;
+      font-size: 20px;
     }
 
     hr {
@@ -125,7 +127,7 @@
       }
     }
   </style>
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -134,11 +136,11 @@
       <a href="/dashboard">Dashboard</a>
       <a onclick="dropDownList()" class="dropbtn">Show Table</a>
       <div id="dropdownTable" class="dropdown-content">
-        <a href="#">Customer</a>
+        <a href="/customer-info">Customer</a>
         <a href="/booking_table">Booking</a>
         <a href="/employees">Employees</a>
         <a href="/menu_item">Menu Items</a>
-        <a href="/room_item">Room items</a>
+        <a href="/room-item">Room items</a>
         <a href="#">Room Management</a>
       </div>
       <a href="/purchase">Purchase</a>
@@ -250,12 +252,24 @@
       </div>
       <div class="col-25">
         <div class="container" id="cart-container">
-          <h4>Cart <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b
+          <h4>Cart <span class="price" style="color:black; cursor:pointer"><i class="fa fa-shopping-cart"></i> <b
                 id="cart-total">0</b></span>
           </h4>
 
           <hr>
-          <p>Total <span class="price" style="color:black"><b id="total-price">$0</b></span></p>
+          <p>Total <span class="price" style="color:black"><b id="total-price"></b></span></p>
+          <p></p>
+          <div>
+            <input type="text" id="phone-input" placeholder="Enter Customer phone number...">
+            <button class="button" style="width: 60px; height: 40px; display: none;" onclick="clearPhoneNumberInput()"
+              id="clear-button">Clear</button>
+          </div>
+          <div id="phone-display"> </div>
+          <div class="button-container" style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <!-- <button class="button" style="width: 60px; height: 40px;" onclick="validateAndDisplay()">Check</button> -->
+            <button class="button" style="width: 100px; height: 40px; " onclick="storeData()">Complete</button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -263,67 +277,8 @@
 
 
 </body>
-<script>
-  // Select all elements with class 'cbutton' (increase and decrease buttons)
-
-  document.querySelectorAll('.cbutton').forEach(button => {
-    button.addEventListener('click', function (event) {
-      const clickedButton = event.target;
-      const countElement = clickedButton.parentElement.querySelector('.count');
-      let count = parseInt(countElement.textContent);
-      const productRow = clickedButton.closest('tr');
-      const productName = productRow.querySelector('a').textContent;
-      const productPrice = parseFloat(productRow.querySelectorAll('td')[2].textContent.slice(1)); // Extract price
-
-      if (clickedButton.classList.contains('increase')) {
-        count++;
-        createCartItem(productName, productPrice);
-      } else if (clickedButton.classList.contains('decrease') && count > 0) {
-        count--;
-        removeCartItem(productName);
-      }
-
-      countElement.textContent = count;
-
-      const quantityValue = document.querySelectorAll('.count');
-      const totalPrice = Array.from(quantityValue).reduce((total, element) => {
-        const price = parseFloat(element.parentElement.previousElementSibling.textContent.slice(1));
-        const quantity = parseInt(element.textContent);
-        return total + (price * quantity);
-      }, 0);
-      const roundedTotalPrice = totalPrice.toFixed(2);
-      document.getElementById('total-price').textContent = `$${roundedTotalPrice}`;
-      const numProduct = document.querySelectorAll('.container p');
-      document.getElementById('cart-total').textContent = numProduct.length.toString() - 1;
-    });
-  });
-  function createCartItem(productName, productPrice) {
-    const cartContainer = document.getElementById('cart-container');
-    const pElement = document.createElement('p');
-    const aElement = document.createElement('a');
-    const spanElement = document.createElement('span');
-
-    aElement.textContent = productName;
-    spanElement.textContent = `$${productPrice}`;
-    spanElement.classList.add('price');
-    pElement.appendChild(aElement);
-    pElement.appendChild(spanElement);
-
-    cartContainer.insertBefore(pElement, cartContainer.children[1]); // Insert before the <hr> element
-  }
-  function removeCartItem(productName) {
-    const cartItems = document.querySelectorAll('.container p');
-    for (let i = 0; i < cartItems.length; i++) {
-      const item = cartItems[i];
-      if (item.querySelector('a').textContent === productName) {
-        item.remove();
-        break;
-      }
-    }
-    ;
-  }
-
-</script>
+<script src="assets/js/purchase.js"></script>
 <script src="assets/js/dashboard.js"></script>
+
 
 </html>

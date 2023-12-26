@@ -1,8 +1,10 @@
+from typing import Optional
 from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
 import secrets
 import string
@@ -231,7 +233,7 @@ async def deleteEmployee(id: int = Form()):
     admin.commit()
     return RedirectResponse(url='/booking_table',status_code=303)
 
-@app.get('/room_item', response_class=HTMLResponse)
+@app.get('/room-item', response_class=HTMLResponse)
 async def room_item(request:Request):
     user = request.session.get("user")
     if not user:
@@ -251,19 +253,100 @@ async def updateRoomItem(request: Request, items_id: int = Query(...)):
 
 @app.post("/updating-room-item")
 async def updateRoomItem(
-    employee_id: str = Form(...),
-    new_position: str = Form(...),
-    new_contact_info: str = Form(...),
-    new_salary: int = Form(...),
+    new_quantity: str = Form(None),
+    new_Condition: str = Form(None),
+    new_checkTime: str = Form(...),
+    room_number: int = Form(...),
+    item_name: str = Form(...)
 ):
     admin_cursor.execute(
         """
         UPDATE `room_items` 
-        SET `item_id`='[value-1]',`room_number`='[value-2]',
-        `item_name`='[value-3]',`quantity`='[value-4]',
-        `item_condition`='[value-5]',`last_checked`='[value-6]' WHERE 1
+        SET `quantity`= %s,
+        `item_condition`=%s,`last_checked`=DATE_FORMAT(%s,'%Y/%m/%d')
+        WHERE `item_name`= %s AND `room_number`= %s
         """,
-        (new_position, new_contact_info, new_salary, employee_id),
+        (new_quantity, new_Condition, new_checkTime, item_name, room_number),
     )
     admin.commit()
-    return RedirectResponse(url='/employees',status_code=303)
+    return RedirectResponse(url='/room-item',status_code=303)
+
+@app.get('/customer-info', response_class=HTMLResponse)
+async def room_item(request:Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute(f"SELECT * FROM `customers`")
+    customer_list=admin_cursor.fetchall()
+    return templates.TemplateResponse("customer.html",{"request": request, "customer_list":customer_list})
+
+class Customer(BaseModel):
+    customer_id: Optional[str]
+    phone: Optional[str]
+    total_spent: Optional[float]
+    
+@app.post("/store-customer-bill")
+async def store_customer_bill(customer: Customer):
+    admin_cursor.execute(f"SELECT phone FROM customers WHERE `phone`= '{customer.phone}'")
+    result=admin_cursor.fetchone()
+    if result:
+        admin_cursor.execute(f"UPDATE `customers` SET `total_spent`=`total_spent`+{customer.total_spent} WHERE `phone`='{customer.phone}'")
+        admin.commit()
+        return {"phone": result[0]}
+    else: 
+        admin_cursor.execute(f"INSERT INTO `customers`(`customer_id`, `phone`, `total_spent`) VALUES ('{customer.customer_id}','{customer.phone}','{customer.total_spent}')")
+        admin.commit()
+        return {"name": "Not h"}  # Adjust response for non-existent phone numbers
+
+def sanitize_phone_number(phone: str) -> str:
+    if phone.startswith('+'):
+        return phone[3:]  # Remove the '+' symbol and 2 numbers follows
+    return phone
+@app.post('/subscribe')
+async def subscribe(phone_address: str = Form(...)):
+    sanitized_phone = sanitize_phone_number(phone_address)
+    cursor.execute(f"SELECT * FROM customers WHERE `phone` LIKE '%{sanitized_phone}%'")
+    result=cursor.fetchall()
+    if len(result) >1 :
+        return RedirectResponse(url='/', status_code=303)
+    else:
+        cursor.execute(f"INSERT INTO `customers`(`phone`,`customer_id`) VALUES ('{sanitized_phone}', CONCAT('ID_','{sanitized_phone}'))')")
+        customer.commit()
+        return RedirectResponse(url='/', status_code=303)
+
+@app.get('/menu_item', response_class=HTMLResponse)
+async def get_menu_items(request:Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute(f"SELECT * FROM menu")
+    list_items=admin_cursor.fetchall()
+    return templates.TemplateResponse("menuItem.html",{"request": request, "menu_items":list_items}) 
+
+@app.get('/update-menu', response_class=HTMLResponse)
+async def update_menu(request:Request, items_id: str = Query(...)):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute(f"SELECT * FROM menu where `item_id`='{items_id}'")
+    result=admin_cursor.fetchone()
+    return templates.TemplateResponse("updateMenu.html",{"request": request, "item":result}) 
+@app.post('/updating-menu',response_class=HTMLResponse)
+async def update_menu(
+    item_id: str = Form(None),
+    new_name: str = Form(None),
+    new_description: str = Form(...),
+    new_price: float = Form(...)
+):
+    admin_cursor.execute(
+        """
+        UPDATE `menu` 
+        SET `item_name`= %s,
+        `description`=%s,`price`=%s
+        WHERE `item_id`= %s 
+        """,
+        (new_name, new_description, new_price, item_id)
+    )
+    admin.commit()
+    return RedirectResponse(url='/menu_item',status_code=303)
+

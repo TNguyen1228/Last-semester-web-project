@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta http-equiv="refresh" content="300">
+    <meta http-equiv="refresh" content="180">
     <link rel="stylesheet" href="assets/css/stat.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <title>Booking information</title>
@@ -16,11 +16,11 @@
         <a href="/dashboard">Dashboard</a>
         <a onclick="dropDownList()" class="dropbtn">Show Table</a>
         <div id="dropdownTable" class="dropdown-content">
-            <a href="#">Customer</a>
+            <a href="/customer-info">Customer</a>
             <a onclick="window.location.reload()">Booking</a>
             <a href="/employees">Employees</a>
             <a href="/menu_item">Menu Items</a>
-            <a href="/room_item">Room items</a>
+            <a href="/room-item">Room items</a>
             <a href="#">Room Management</a>
         </div>
         <a href="/purchase">Purchase</a>
@@ -60,7 +60,7 @@
                         <td>{{row[3]}}</td>
                         <td>{{row[4]}}</td>
                         <td>{{row[5]}}</td>
-                        <td>{{row[6]}}</td>
+                        <td>{{row[6] if row[6] is not none else ''}}</td>
                         <td>
                             <!-- <form action="/update-employee" method="get">
                                 <input type="hidden" name="employee_id" value="{{ row[0] }}">

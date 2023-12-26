@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Staff</title>
+    <title>Add Product</title>
     <link rel="icon" href="./assets/favicon.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="assets/css/dashboard.css">
@@ -280,40 +280,34 @@
     <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
     <main>
         <div class="wrapper">
-            <form id="add-employee" method="post" action="/add-employee">
-                <h1>New family member</h1>
+            <form id="add-employee" method="post" action="/add-new-product">
+                <h1>New Product</h1>
                 <div class="input-box">
-                    <label for="new_id">ID:</label>
-                    <input type="text" id="new_id" name="new_id" placeholder="I.e: ID_222222" required>
+                    <label for="type">Type:</label>
+                    <input type="text" id="type" name="type" placeholder="Type: Tea/Coffee/Smoothie/Snack/Other" required>
                 </div>
                 <div class="input-box">
                     <label for="new_name">Name:</label>
-                    <input type="text" id="new_name" name="new_name" placeholder="Jake The Dog" required>
+                    <input type="text" id="new_name" name="new_name" placeholder="Name of the product" required>
                 </div>
                 <div class="input-box">
-                    <label for="new_position">Position:</label>
-                    <input type="text" id="new_position" name="new_position" placeholder="Bartender/Servant/..."
-                        required>
+                    <label for="new_description">Description:</label>
+                    <input type="text" id="new_description" name="new_description" placeholder="Description" required>
                 </div>
                 <div class="input-box">
-                    <label for="new_contact_info">Contact Info:</label>
-                    <input type="text" id="new_contact_info" name="new_contact_info" placeholder="Phone number"
-                        required>
+                    <label for="new_price">Price Info:</label>
+                    <input type="text" id="new_price" name="new_price" placeholder="Price of free?" required>
                 </div>
                 <div class="input-box">
-                    <label for="new_salary">Salary:</label>
-                    <input type="number" id="new_salary" name="new_salary" placeholder="Money" required>
-                </div>
-                <div class="input-box">
-                    <label for="new_hire_date">Hire Date:</label>
-                    <input type="date" id="new_hire_date" name="new_hire_date" placeholder="DD/MM/YYYY" required>
+                    <label for="new_image">Choose Image:</label>
+                    <input type="file" id="new_image" name="new_image" accept="image/*" style="padding-top: 10px;">
                 </div>
                 <div id="error-popup" class="error-popup">
                     <span class="close" onclick="closeErrorPopup()">&times;</span>
                     <p id="error-message"></p>
                 </div>
                 <br>
-                <button type="submit" onclick="validateForm(event);">Add Employee</button>
+                <button type="submit" onsubmit="validateForm(event);">Add Product</button>
 
             </form>
         </div>
@@ -321,28 +315,27 @@
 
 
     <script>
-
-        const form = document.getElementById('add-employee'); // Replace 'yourFormId' with your actual form ID
+        const form = document.getElementById('add-new-product'); // Replace 'yourFormId' with your actual form ID
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const formData = new FormData(form);
             try {
-                const response = await fetch('/add-employee', {
+                const response = await fetch('/add-new-product', {
                     method: 'POST',
                     body: formData
                 });
 
                 if (response.status === 500) {
                     // Handle the error here, for example, display it in an alert
-                    alert("ID already exited");
+                    alert("Product already exited");
                     window.location.reload();
                 }
 
                 if (response.status === 303) {
                     // Handle the error here, for example, display it in an alert
-                    alert("Welcome dude!");
-                    window.location.href = "/employees";
+                    alert("Complete!");
+                    window.location.href = "/menu_item";
                 }
             } catch (error) {
                 console.error('Error:', error);

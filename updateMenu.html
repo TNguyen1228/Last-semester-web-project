@@ -5,26 +5,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Room Item</title>
+  <title>Update Staff</title>
   <link rel="icon" href="./assets/favicon.png">
   <!-- <link rel="stylesheet" href="/assets/css/style.css"> -->
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-  <script>
-    function checkPosition() {
-      // Lấy giá trị của position từ input
-      var positionValue = document.getElementById('new_position').value.toLowerCase();
 
-      // Kiểm tra xem position có liên quan đến quản lý hay không
-      if (positionValue.includes("manager") || positionValue.includes("quản lý")) {
-        // Nếu có, hiển thị thông báo và ngăn chặn form submit
-        alert("You are manager already!");
-        return false;
-      }
-
-      // Nếu không liên quan đến quản lý, cho phép submit form
-      return true;
-    }
-  </script>
   <style>
     @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
 
@@ -262,33 +246,27 @@
 
 <body>
   <div class="wrapper">
-    <form id="updating" method="post" action="/updating-room-item">
-      <h1>Update Room Item</h1>
+    <form id="updating" method="post" action="/updating-menu">
+      <h1>Update Menu</h1>
       <div class="input-box">
-        <label for="room_number">Room:</label>
-        <input type="text" id="room_number" name="room_number" value="{{item_info[1]}}" readonly
-          style="text-align: center;">
-      </div>
-      <div class="input-box">
-        <label for="item_name">Item:</label>
-        <input type="text" id="item_name" name="item_name" value="{{item_info[2]}}" readonly
+        <input type="text" id="item_id" name="item_id" value="{{item[0]}}" readonly
           style="text-align: center;">
       </div>
 
       <div class="input-box">
-        <label for="new_quantity">Quantity:</label>
-        <input type="text" id="new_quantity" name="new_quantity" placeholder="{{item_info[3]}}">
+        <label for="new_name">Name:</label>
+        <input type="text" id="new_name" name="new_name" placeholder="{{ item[1] }}" value="{{item[1]}}">
       </div>
       <div class="input-box">
-        <label for="new_Condition">Condition:</label>
-        <input type="text" id="new_Condition" name="new_Condition" placeholder="{{item_info[4]}}">
+        <label for="new_contact_info">Description</label>
+        <input type="text" id="new_description" name="new_description" value="{{item[2]}}" required>
       </div>
       <div class="input-box">
-        <label for="new_checkTime">Check time:</label>
-        <input type="date" id="new_checkTime" name="new_checkTime"  required>
+        <label for="new_price">New Price:</label>
+        <input type="text" id="new_price" name="new_price" placeholder="{{item[3]}}" value="{{item[3]}}" required>
       </div>
       
-      <button type="submit" onsubmit="return checkPosition();">Complete</button>
+      <button type="submit">Complete</button>
     </form>
   </div>
 </body>

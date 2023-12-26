@@ -48,9 +48,14 @@ function sortTable(column, sort_asc) {
         let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
             second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-        return sort_asc ? (first_row < second_row ? 1 : -1) : (first_row < second_row ? -1 : 1);
+        // Convert text content to numbers for columns containing numeric data
+        const firstValue = isNaN(parseFloat(first_row)) ? first_row : parseFloat(first_row);
+        const secondValue = isNaN(parseFloat(second_row)) ? second_row : parseFloat(second_row);
+
+        // Perform comparison
+        return sort_asc ? (firstValue > secondValue ? 1 : -1) : (firstValue < secondValue ? 1 : -1);
     })
-        .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
+    .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));
 }
 const deleteButton = document.querySelector('#deleteButton');
 const confirmModal = document.querySelector('#confirmModal');
@@ -63,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
 function validateForm(event) {
     var idValue = document.getElementById('new_id').value;
     var idPattern = /^ID_\d{1,6}$/;
@@ -78,6 +84,7 @@ function showErrorPopup(message) {
     errorMessage.innerHTML = message;
     errorPopup.style.display = 'block';
 }
+
 function closeErrorPopup() {
     var errorPopup = document.getElementById('error-popup');
     errorPopup.style.display = 'none';
