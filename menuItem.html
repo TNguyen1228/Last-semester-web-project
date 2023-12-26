@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/stat.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
-    <title>Item information</title>
+    <title>Menu Item information</title>
 </head>
 
 <body>
@@ -60,8 +60,8 @@
                         <td>{{item[4]}}</td>
                         <td>{{item[5]}}</td>
                         <td>
-                            <form action="/update-room-item" method="get">
-                                <input type="hidden" name="items_id" value="{{item[0]}}">
+                            <form action="/update-roomItem" method="get">
+                                <input type="hidden" name="employee_id" value="{{item[0] }}">
                                 <button id="updateButton" type="submit">Update</button>
                             </form>
                         </td>

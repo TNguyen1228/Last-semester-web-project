@@ -240,3 +240,30 @@ async def room_item(request:Request):
     item_list=admin_cursor.fetchall()
     return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list})
     
+@app.get("/update-room-item", response_class=HTMLResponse)
+async def updateRoomItem(request: Request, items_id: int = Query(...)):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute("SELECT `item_id`, `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items` WHERE `item_id` = %s", (items_id,))
+    items_id_result = admin_cursor.fetchone()
+    return templates.TemplateResponse("updateRoomItem.html", {"request": request, "item_info": items_id_result})
+
+@app.post("/updating-room-item")
+async def updateRoomItem(
+    employee_id: str = Form(...),
+    new_position: str = Form(...),
+    new_contact_info: str = Form(...),
+    new_salary: int = Form(...),
+):
+    admin_cursor.execute(
+        """
+        UPDATE `room_items` 
+        SET `item_id`='[value-1]',`room_number`='[value-2]',
+        `item_name`='[value-3]',`quantity`='[value-4]',
+        `item_condition`='[value-5]',`last_checked`='[value-6]' WHERE 1
+        """,
+        (new_position, new_contact_info, new_salary, employee_id),
+    )
+    admin.commit()
+    return RedirectResponse(url='/employees',status_code=303)

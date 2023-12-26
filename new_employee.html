@@ -268,7 +268,7 @@
             <a href="#">Customer</a>
             <a href="/booking_table">Booking</a>
             <a href="/employees">Employees</a>
-            <a href="#">Menu</a>
+            <a href="/menu_item">Menu Items</a>
             <a href="/room_item">Room items</a>
             <a href="#">Room Management</a>
         </div>
@@ -280,7 +280,7 @@
     <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
     <main>
         <div class="wrapper">
-            <form id="add-employee" method="post" action="/add-employee" onsubmit="validateForm(event);">
+            <form id="add-employee" method="post" action="/add-employee">
                 <h1>New family member</h1>
                 <div class="input-box">
                     <label for="new_id">ID:</label>
@@ -313,7 +313,7 @@
                     <p id="error-message"></p>
                 </div>
                 <br>
-                <button type="submit">Add Employee</button>
+                <button type="submit" onsubmit="validateForm(event);">Add Employee</button>
 
             </form>
         </div>
