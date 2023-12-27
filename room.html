@@ -116,20 +116,26 @@
             color: grey;
         }
 
+        table {
+            border-spacing: 50px;
+            height: 50%;
+        }
+
         th,
         td {
             border: 1px solid;
             border-radius: 10px;
             text-align: center;
+            height: 50px;
+
         }
-        td:hover {
-            background-color: #787878;
-        }
+
         tr {
             height: 100px;
         }
-        td {
-            width: 50px;
+
+        .room.selected {
+            background-color: #787878;
         }
 
         /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
@@ -157,10 +163,13 @@
                 <a href="/employees">Employees</a>
                 <a href="/menu_item">Menu Items</a>
                 <a href="/room-item">Room items</a>
+                <a href="/room-price">Room Price</a>
                 <a href="/room-management">Room Management</a>
             </div>
+            <a href="/new-employee">New Staff</a>
             <a href="/purchase">Purchase</a>
             <a href="#">Contact</a>
+            
         </div>
         <button class="openbtn" onclick="toggleNav()"
             style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
@@ -176,10 +185,12 @@
                             <table style="width: 100%;">
                                 <h2 id="1f" style="text-align: center;">1st Floor</h2>
                                 <tr>
-                                    <td>Room 101</td>
-                                    <td>Room 102</td>
-                                    <td>Room 103</td>
-                                    <td>Room 104</td>
+                                    <td class="room">101</td>
+                                    <td class="room">102</td>
+                                </tr>
+                                <tr>
+                                    <td class="room">103</td>
+                                    <td class="room">104</td>
                                 </tr>
 
                             </table>
@@ -189,21 +200,15 @@
 
                             <table style="width: 100%;">
                                 <h2 id="2f" style="text-align: center;">2st Floor</h2>
-                                <!-- <tr>
-                    <th style="width: 15px;"></th>
-                    <th style="width: 400px; padding-left: 120px; text-align: left;">Name</th>
-                    <th style="text-align: center;">Price</th>
-                    <th style="width: 30%;">Quantity</th>
-                  </tr> -->
 
-                                <tr >
-                                    <td>Room 201</td>
-                                    <td>Room 202</td>
-                                    <td>Room 203</td>
+                                <tr>
+                                    <td class="room"> 201</td>
+                                    <td class="room"> 202</td>
+                                    <td class="room"> 203</td>
                                 </tr>
-                                <tr >
-                                    <td>Room 204</td>
-                                    <td>Room 205</td>
+                                <tr>
+                                    <td class="room"> 204</td>
+                                    <td class="room"> 205</td>
                                 </tr>
                             </table>
                         </div>
@@ -212,8 +217,9 @@
             </div>
             <div class="col-25">
                 <div class="container" id="cart-container">
-                    <h4>Bill <span class="price" style="color:black; cursor:pointer"><i class="fa fa-shopping-cart"></i>
-                            <b id="cart-total">0</b></span>
+                    <h4>Service <span class="bill" style="color:black; cursor:pointer">
+                            <!-- <i class="fa fa-shopping-cart"></i> -->
+                            <!-- <b id="cart-total">0</b></span> -->
                     </h4>
 
                     <hr>
@@ -227,9 +233,8 @@
                     <div id="phone-display"> </div>
                     <div class="button-container"
                         style="display: flex; justify-content: space-between; margin-top: 10px;">
-                        <!-- <button class="button" style="width: 60px; height: 40px;" onclick="validateAndDisplay()">Check</button> -->
                         <button class="button" style="width: 100px; height: 40px; "
-                            onclick="storeData()">Complete</button>
+                            onclick="cleanRoom()">Complete</button>
                     </div>
 
                 </div>
@@ -239,7 +244,7 @@
 
 
 </body>
-<script src="assets/js/purchase.js"></script>
+<script src="assets/js/room-management.js"></script>
 <script src="assets/js/dashboard.js"></script>
 
 

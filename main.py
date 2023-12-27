@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from typing import Optional
 from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
@@ -238,16 +239,16 @@ async def room_item(request:Request):
     user = request.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
-    admin_cursor.execute(f"SELECT `item_id`, `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items`")
+    admin_cursor.execute(f"SELECT `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items`")
     item_list=admin_cursor.fetchall()
     return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list})
     
 @app.get("/update-room-item", response_class=HTMLResponse)
-async def updateRoomItem(request: Request, items_id: int = Query(...)):
+async def updateRoomItem(request: Request, room_number: int = Query(...), item_name: str=Query(...)):
     user = request.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
-    admin_cursor.execute("SELECT `item_id`, `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items` WHERE `item_id` = %s", (items_id,))
+    admin_cursor.execute("SELECT `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items` WHERE `room_number` = %s AND `item_name`=%s", (room_number,item_name))
     items_id_result = admin_cursor.fetchone()
     return templates.TemplateResponse("updateRoomItem.html", {"request": request, "item_info": items_id_result})
 
@@ -292,11 +293,12 @@ async def store_customer_bill(customer: Customer):
     if result:
         admin_cursor.execute(f"UPDATE `customers` SET `total_spent`=`total_spent`+{customer.total_spent} WHERE `phone`='{customer.phone}'")
         admin.commit()
-        return {"phone": result[0]}
     else: 
         admin_cursor.execute(f"INSERT INTO `customers`(`customer_id`, `phone`, `total_spent`) VALUES ('{customer.customer_id}','{customer.phone}','{customer.total_spent}')")
         admin.commit()
-        return {"name": "Not h"}  # Adjust response for non-existent phone numbers
+    admin_cursor.execute(f"INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{customer.phone}'),'{customer.customer_id}',CURRENT_DATE,'{customer.total_spent}')")
+    admin.commit()
+    # return {"name": "Not h"}  # Adjust response for non-existent phone numbers
 
 def sanitize_phone_number(phone: str) -> str:
     if phone.startswith('+'):
@@ -350,3 +352,68 @@ async def update_menu(
     admin.commit()
     return RedirectResponse(url='/menu_item',status_code=303)
 
+@app.get('/room-price',response_class=HTMLResponse)
+async def get_room_price(request:Request):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    admin_cursor.execute(f"SELECT * FROM `room_menu` ")
+    room_list=admin_cursor.fetchall()
+    return templates.TemplateResponse("room-price.html",{"request": request, "items":room_list}) 
+@app.get('/update-price',response_class=HTMLResponse)
+async def update_price(r:Request, items_id: str = Query()):
+    user = r.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
+    return templates.TemplateResponse("updateRoomPrice.html",{"request":r,"item_info":items_id})
+
+@app.post('/updating-room-price')
+async def update_price(room_number:str=Form(),new_price:str=Form()):
+    admin_cursor.execute(f"UPDATE `room_menu` SET `price_per_hour`='{new_price}' WHERE `room_number`='{room_number}'")
+    return RedirectResponse(url='/room-price', status_code=303)
+
+class RoomDetails(BaseModel):
+    room_number:Optional[str]=None
+    time_in:Optional[str]=None
+    time_out:Optional[str]=None
+
+@app.post('/get-room-details')
+async def get_room_details(room:RoomDetails):
+    admin_cursor.execute(f"SELECT `time_in`,`time_out`, `price_per_hour` FROM `room_management`, `room_menu` WHERE `room_management`.`room_number`=`room_menu`.`room_number` AND `room_management`.`room_number`={room.room_number} AND `date`=CURDATE()")
+    result=admin_cursor.fetchone()
+    admin.commit()
+    if result:
+    # Extract time_in and time_out from the database result
+        time_in = result[0]/3600  
+        time_out = result[1]/3600  
+        price_per_hour = result[2]
+        duration=time_out-time_in
+        return {
+            "time_in": time_in,
+            "time_out": time_out,
+            "duration": duration,
+            "price": price_per_hour
+        }
+    else:
+        return Response(status_code=404)
+
+
+@app.post('/add-room-details')
+async def add_room_details(room:RoomDetails):
+    admin_cursor.execute(f"INSERT INTO `room_management` ( `room_number`, `time_in`, `time_out`) VALUES ({room.room_number}, CURRENT_TIME(), '')")
+    admin.commit()
+    return Response(status_code=200)
+
+@app.put('/set-time-out')
+async def set_time_out(room:RoomDetails):
+    admin_cursor.execute(f"UPDATE `room_management` SET `time_out`=CURRENT_TIME() WHERE `room_number`='{room.room_number}' AND date=CURDATE()")
+    admin.commit()
+    return Response(status_code=200)
+
+@app.get('/room-management', response_class=HTMLResponse)
+async def room_management(r:Request):
+    # user = r.session.get("user")
+    # if not user:
+    #     return RedirectResponse(url='/login')
+    return templates.TemplateResponse("room.html",{"request": r}) 
+    
