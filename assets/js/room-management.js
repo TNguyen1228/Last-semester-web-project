@@ -74,13 +74,15 @@ function cleanRoom() {
     const phoneNumber = document.getElementById('phone-input').value.trim();
     const cus_id = `ID_${phoneNumber}`
     const bill = parseFloat(document.getElementById('total-price').textContent.slice(1));
+    const selectedRoom = document.querySelector('td.room.selected');
+    const room=selectedRoom.textContent.trim();
     if (phoneNumber !== '') {
         fetch('/clean-room', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ customer_id: cus_id, phone: phoneNumber, total_spent: bill }),
+            body: JSON.stringify({ customer_id: cus_id, phone: phoneNumber, total_spent: bill, room: room }),
         })
             .then(response => {
                 if (!response.ok) {

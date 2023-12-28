@@ -154,7 +154,7 @@ window.addEventListener("mousemove", function (event) {
   x = (event.clientX / window.innerWidth * 10) - 5;
   y = (event.clientY / window.innerHeight * 10) - 5;
 
-  // reverse the number eg. 20 -> -20, -5 -> 5
+  
   x = x - (x * 2);
   y = y - (y * 2);
 
@@ -166,21 +166,21 @@ window.addEventListener("mousemove", function (event) {
 
 });
 
-// Get today's date
+
 const today = new Date();
 
-// Get the day, month, and year
+
 const day = String(today.getDate()).padStart(2, '0');
-const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+const month = String(today.getMonth() + 1).padStart(2, '0'); 
 const year = today.getFullYear();
 
-// Create the formatted date string in MM/DD/YYYY format
+
 const formattedDate = year + '-' + month + '-' + day;
 
-// Set the minimum value for the input field to today's date
+
 document.getElementById('reservation-date').min = formattedDate;
 
-// Set the default value of the input field to today's date
+
 document.getElementById('reservation-date').value = formattedDate;
 
 

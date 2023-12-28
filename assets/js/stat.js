@@ -18,12 +18,12 @@ function searchTable() {
         }
     });
 
-    // Rearrange rows based on matches
+    
     const tbody = document.querySelector('tbody');
-    tbody.innerHTML = ''; // Clear existing tbody content
+    tbody.innerHTML = ''; 
 
     matchedRows.forEach((matchedRow) => {
-        tbody.appendChild(matchedRow); // Append matched rows to tbody
+        tbody.appendChild(matchedRow); 
     });
     document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
@@ -48,11 +48,11 @@ function sortTable(column, sort_asc) {
         let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase(),
             second_row = b.querySelectorAll('td')[column].textContent.toLowerCase();
 
-        // Convert text content to numbers for columns containing numeric data
+        
         const firstValue = isNaN(parseFloat(first_row)) ? first_row : parseFloat(first_row);
         const secondValue = isNaN(parseFloat(second_row)) ? second_row : parseFloat(second_row);
 
-        // Perform comparison
+        
         return sort_asc ? (firstValue > secondValue ? 1 : -1) : (firstValue < secondValue ? 1 : -1);
     })
     .map(sorted_row => document.querySelector('tbody').appendChild(sorted_row));

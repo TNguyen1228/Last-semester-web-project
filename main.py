@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+
 from typing import Optional
 from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
@@ -282,9 +282,9 @@ async def room_item(request:Request):
     return templates.TemplateResponse("customer.html",{"request": request, "customer_list":customer_list})
 
 class Customer(BaseModel):
-    customer_id: Optional[str]
-    phone: Optional[str]
-    total_spent: Optional[float]
+    customer_id: Optional[str]=None
+    phone: Optional[str]=None
+    total_spent: Optional[float]=None
     
 @app.post("/store-customer-bill")
 async def store_customer_bill(customer: Customer):
@@ -412,8 +412,27 @@ async def set_time_out(room:RoomDetails):
 
 @app.get('/room-management', response_class=HTMLResponse)
 async def room_management(r:Request):
-    # user = r.session.get("user")
-    # if not user:
-    #     return RedirectResponse(url='/login')
+    user = r.session.get("user")
+    if not user:
+        return RedirectResponse(url='/login')
     return templates.TemplateResponse("room.html",{"request": r}) 
+
+class CleanRoomRequest(Customer):
+    room:Optional[str]=None
+
+@app.post("/clean-room")
+async def clean_room(r: CleanRoomRequest):
+    admin_cursor.execute(f"DELETE FROM `room_management` WHERE `room_number`='{r.room}' and `date`=CURRENT_DATE ")
     
+    admin_cursor.execute(f"SELECT phone FROM customers WHERE `phone`= '{r.phone}'")
+    result=admin_cursor.fetchone()
+    if result:
+        admin_cursor.execute(f"UPDATE `customers` SET `total_spent`=`total_spent`+{r.total_spent} WHERE `phone`='{r.phone}'")
+        # admin.commit()
+    else: 
+        admin_cursor.execute(f"INSERT INTO `customers`(`customer_id`, `phone`, `total_spent`) VALUES ('{r.customer_id}','{r.phone}','{r.total_spent}')")
+        # admin.commit()
+    admin_cursor.execute(f"INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{r.phone}','_{r.room}'),'{r.customer_id}',CURRENT_DATE,'{r.total_spent}')")
+    
+    admin.commit()
+    return Response(status_code=200)

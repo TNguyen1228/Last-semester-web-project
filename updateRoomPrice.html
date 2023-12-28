@@ -32,17 +32,17 @@
         function checkValue(event) {
             let price = document.getElementById('item_name').value.trim();
 
-            // Regular expressions to match float or integer numbers
+            
             let floatRegex = /^-?\d*(\.\d+)?$/;
             let intRegex = /^-?\d+$/;
 
             if (floatRegex.test(price) || intRegex.test(price)) {
-                return true; // Allow form submission
+                return true; 
             } else {
                 alert('Please enter a valid float or integer number for the price.');
-                // event.preventDefault()
+                
                 document.getElementById('item_name').value='';
-                return false; // Block form submission
+                return false; 
             }
         }
     </script>
