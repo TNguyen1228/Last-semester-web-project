@@ -1,9 +1,4 @@
 
-/**
- * PRELOAD
- * 
- * loading will be end after document is loaded
- */
 
 const preloader = document.querySelector("[data-preaload]");
 
@@ -13,22 +8,11 @@ window.addEventListener("load", function () {
 });
 
 
-
-/**
- * add event listener on multiple elements
- */
-
 const addEventOnElements = function (elements, eventType, callback) {
   for (let i = 0, len = elements.length; i < len; i++) {
     elements[i].addEventListener(eventType, callback);
   }
 }
-
-
-
-/**
- * NAVBAR
- */
 
 const navbar = document.querySelector("[data-navbar]");
 const navTogglers = document.querySelectorAll("[data-nav-toggler]");
@@ -154,7 +138,7 @@ window.addEventListener("mousemove", function (event) {
   x = (event.clientX / window.innerWidth * 10) - 5;
   y = (event.clientY / window.innerHeight * 10) - 5;
 
-  
+
   x = x - (x * 2);
   y = y - (y * 2);
 
@@ -171,7 +155,7 @@ const today = new Date();
 
 
 const day = String(today.getDate()).padStart(2, '0');
-const month = String(today.getMonth() + 1).padStart(2, '0'); 
+const month = String(today.getMonth() + 1).padStart(2, '0');
 const year = today.getFullYear();
 
 
@@ -184,3 +168,34 @@ document.getElementById('reservation-date').min = formattedDate;
 document.getElementById('reservation-date').value = formattedDate;
 
 
+function userSubscribe() {
+  // Retrieve input value
+  const phoneInput = document.getElementById('subscriber-phone').value;
+
+  // Send data (you can replace this with your actual data sending process, like using fetch or AJAX)
+  // For demonstration purposes, logging the retrieved phone number
+  console.log('Phone Number:', phoneInput);
+
+  fetch('/subscribe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ phone: phoneInput }),
+  })
+    .then(response => {
+      // Handle response
+      if (response.status == 201) {
+        alert("Thank you!");
+        window.location.reload();
+      } else {
+        alert("You have subscribed before!");
+        window.location.reload();
+      }
+
+    })
+    .catch(error => {
+      // Handle error
+    });
+
+}

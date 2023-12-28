@@ -305,16 +305,16 @@ def sanitize_phone_number(phone: str) -> str:
         return phone[3:]  # Remove the '+' symbol and 2 numbers follows
     return phone
 @app.post('/subscribe')
-async def subscribe(phone_address: str = Form(...)):
-    sanitized_phone = sanitize_phone_number(phone_address)
+async def subscribe(cus:Customer):
+    sanitized_phone = sanitize_phone_number(cus.phone)
     cursor.execute(f"SELECT * FROM customers WHERE `phone` LIKE '%{sanitized_phone}%'")
     result=cursor.fetchall()
-    if len(result) >1 :
-        return RedirectResponse(url='/', status_code=303)
+    if len(result) >0 :
+        return Response(status_code=303)
     else:
-        cursor.execute(f"INSERT INTO `customers`(`phone`,`customer_id`) VALUES ('{sanitized_phone}', CONCAT('ID_','{sanitized_phone}'))')")
+        cursor.execute(f"INSERT INTO `customers`(`phone`,`customer_id`) VALUES ('{sanitized_phone}', CONCAT('ID_','{sanitized_phone}'))")
         customer.commit()
-        return RedirectResponse(url='/', status_code=303)
+        return Response(status_code=201)
 
 @app.get('/menu_item', response_class=HTMLResponse)
 async def get_menu_items(request:Request):
