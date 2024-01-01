@@ -1,4 +1,3 @@
-
 from typing import Optional
 from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
@@ -309,7 +308,7 @@ async def subscribe(cus:Customer):
     sanitized_phone = sanitize_phone_number(cus.phone)
     cursor.execute(f"SELECT * FROM customers WHERE `phone` LIKE '%{sanitized_phone}%'")
     result=cursor.fetchall()
-    if len(result) >0 :
+    if len(result) >0:
         return Response(status_code=303)
     else:
         cursor.execute(f"INSERT INTO `customers`(`phone`,`customer_id`) VALUES ('{sanitized_phone}', CONCAT('ID_','{sanitized_phone}'))")
