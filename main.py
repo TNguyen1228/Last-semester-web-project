@@ -64,14 +64,6 @@ async def menu(request: Request):
     return templates.TemplateResponse("menu.html",{"request": request, "records":coffee_list, 
                                                    "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
 
-@app.get('/about')
-async def about():
-    return
-
-@app.get('/booking')
-async def booking():
-    return
-
 @app.post('/submit_booking', response_class=HTMLResponse)
 async def submit_form(name: str = Form(),
                     phone: str = Form(),
@@ -114,7 +106,7 @@ async def login_page():
 async def dashboard(request: Request):
     user = request.session.get("user")
     if not user:
-        return RedirectResponse(url='/login')
+        return RedirectResponse(url='/login',status_code=302)
     # Only accessible if authenticated
     return templates.TemplateResponse('dashboard.html',{"request": request})
 
