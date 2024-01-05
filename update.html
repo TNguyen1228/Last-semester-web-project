@@ -42,17 +42,13 @@
 
 <script>
   function checkPosition() {
-    // Lấy giá trị của position từ input
     var positionValue = document.getElementById('new_position').value.toLowerCase();
 
-    // Kiểm tra xem position có liên quan đến quản lý hay không
     if (positionValue.includes("manager") || positionValue.includes("quản lý")) {
-      // Nếu có, hiển thị thông báo và ngăn chặn form submit
       alert("You are manager already!");
       return false;
     }
 
-    // Nếu không liên quan đến quản lý, cho phép submit form
     return true;
   }
 </script>

@@ -243,7 +243,7 @@ async def updateRoomItem(request: Request, room_number: int = Query(...), item_n
     items_id_result = admin_cursor.fetchone()
     return templates.TemplateResponse("updateRoomItem.html", {"request": request, "item_info": items_id_result})
 
-@app.post("/updating-room-item")
+@app.post("/update-room-item")
 async def updateRoomItem(
     new_quantity: str = Form(None),
     new_Condition: str = Form(None),
