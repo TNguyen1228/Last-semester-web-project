@@ -13,17 +13,13 @@
 
 <body>
     <div id="mySidebar" class="sidebar">
-        <a href="/dashboard">Dashboard</a>
-        <a onclick="dropDownList()" class="dropbtn">Table</a>
-        <div id="dropdownTable" class="dropdown-content">
-            <a href="/customer-info">Customer</a>
-            <a onclick="window.location.reload()">Booking</a>
-            <a href="/employees">Employees</a>
-            <a href="/menu_item">Menu Items</a>
-            <a href="/room-item">Room items</a>
-            <a href="/room-price">Room Price</a>
-            <a href="/room-management">Room Management</a>
-        </div>
+        <a href="/customer-info">Customer</a>
+        <a onclick="window.location.reload()">Booking</a>
+        <a href="/employees">Employees</a>
+        <a href="/menu_item">Menu Items</a>
+        <a href="/room-item">Room items</a>
+        <a href="/room-price">Room Price</a>
+        <a href="/room-management">Room Management</a>
         <a href="/new-employee">New Staff</a>
         <a href="/purchase">Purchase</a>
         <a href="#">Contact</a>
@@ -64,11 +60,6 @@
                         <td>{{row[5]}}</td>
                         <td>{{row[6] if row[6] is not none else ''}}</td>
                         <td>
-                            <!-- <form action="/update-employee" method="get">
-                                <input type="hidden" name="employee_id" value="{{ row[0] }}">
-                                <button id="updateButton" type="submit">Update</button>
-                            </form>
-                            <br> -->
                             <form action="/delete-booking" method="post">
                                 <input type="hidden" name="id" value="{{row[0]}}">
                                 <button id="fireButton" type="button" onclick="myFunction(this.form)">Delete</button>
@@ -84,14 +75,14 @@
     <script>
         function myFunction(form) {
             if (confirm("Are you sure you want delete this?")) {
-                
+
                 form.submit();
             } else {
-                
+
             }
         }
     </script>
-        <script src="assets/js/stat.js"></script>
+    <script src="assets/js/stat.js"></script>
     <script src="assets/js/dashboard.js"></script>
 </body>
 

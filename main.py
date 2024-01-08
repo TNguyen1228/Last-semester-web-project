@@ -22,7 +22,7 @@ templates=Jinja2Templates(directory='./')
 
 app.mount("/assets", StaticFiles(directory="assets"))
 # Configure session middleware
-app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY, session_cookie="session-id", max_age=1800)
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY, session_cookie="session-id", max_age=900)
 
 
 #Configure connect 
@@ -100,16 +100,6 @@ async def login_page():
     with open("./login-page.html", "r") as file:
         login_html = file.read()
     return HTMLResponse(content=login_html)
-
-# Dashboard endpoint (requires authentication)
-@app.get('/dashboard')
-async def dashboard(request: Request):
-    user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login',status_code=302)
-    # Only accessible if authenticated
-    return templates.TemplateResponse('dashboard.html',{"request": request})
-
 @app.get('/logout')
 async def logout(request: Request):
     request.session.clear()  # Clear the session
@@ -276,7 +266,11 @@ class Customer(BaseModel):
     customer_id: Optional[str]=None
     phone: Optional[str]=None
     total_spent: Optional[float]=None
-    
+class Order_items(Customer):
+    order_id: Optional[str]
+    order_item: Optional[str]
+    quantity: Optional[int]  
+      
 @app.post("/store-customer-bill")
 async def store_customer_bill(customer: Customer):
     admin_cursor.execute(f"SELECT phone FROM customers WHERE `phone`= '{customer.phone}'")
@@ -289,7 +283,10 @@ async def store_customer_bill(customer: Customer):
         admin.commit()
     admin_cursor.execute(f"INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{customer.phone}'),'{customer.customer_id}',CURRENT_DATE,'{customer.total_spent}')")
     admin.commit()
-    # return {"name": "Not h"}  # Adjust response for non-existent phone numbers
+
+@app.post('/store-bill-item')
+async def store_bill_item(order:Order_items):
+    return
 
 def sanitize_phone_number(phone: str) -> str:
     if phone.startswith('+'):

@@ -1,5 +1,3 @@
-
-
 document.querySelectorAll('.cbutton').forEach(button => {
   button.addEventListener('click', function (event) {
     const clickedButton = event.target;
@@ -80,7 +78,6 @@ function validateAndDisplay() {
 
     displayPhoneNumber();
 
-
     document.getElementById('clear-button').style.display = 'inline-block';
   } else {
 
@@ -93,7 +90,6 @@ document.getElementById("phone-input").addEventListener("keyup", function (event
   if (event.key === "Enter") {
 
     event.preventDefault();
-
 
     validateAndDisplay();
   }
@@ -110,7 +106,6 @@ function displayPhoneNumber() {
 
   phoneDisplay.innerHTML = '';
 
-
   phoneDisplay.appendChild(newElement);
 
 }
@@ -120,6 +115,25 @@ function storeData() {
   const phoneNumber = document.getElementById('phone-input').value.trim();
   const cus_id = `ID_${phoneNumber}`
   const bill = parseFloat(document.getElementById('total-price').textContent.slice(1));
+  const elements = document.querySelectorAll('p.product a');
+
+  // Create an object to store unique text content as keys and their counts as values
+  const textCounts = {};
+
+  // Loop through each <a> element within <p class="product">
+  elements.forEach((element) => {
+    const text = element.textContent.trim();
+
+    // Check if the text content exists as a key in textCounts
+    if (textCounts[text]) {
+      // If it exists, increment the count
+      textCounts[text]++;
+    } else {
+      // If it doesn't exist, initialize the count to 1
+      textCounts[text] = 1;
+    }
+  });
+
   if (phoneNumber !== '') {
     fetch('/store-customer-bill', {
       method: 'POST',
@@ -127,6 +141,7 @@ function storeData() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ customer_id: cus_id, phone: phoneNumber, total_spent: bill }),
+      
     })
       .then(response => {
         if (!response.ok) {
@@ -138,23 +153,10 @@ function storeData() {
           return response.json();
         }
       })
-      .then(data => {
-
-        handleServerResponse(data);
-
-      })
       .catch(error => {
         console.error('There was an error:', error);
       });
   }
-}
-
-function handleServerResponse(data) {
-
-  const name = data.phone;
-
-
-  console.log('Received phone:', name);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
