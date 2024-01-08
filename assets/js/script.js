@@ -198,4 +198,4 @@ function userSubscribe() {
       // Handle error
     });
 
-}
+};

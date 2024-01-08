@@ -63,7 +63,7 @@ async def menu(request: Request):
     snack_list=cursor.fetchall()
     return templates.TemplateResponse("menu.html",{"request": request, "records":coffee_list, 
                                                    "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
-
+    
 @app.post('/submit_booking', response_class=HTMLResponse)
 async def submit_form(name: str = Form(),
                     phone: str = Form(),
@@ -283,10 +283,11 @@ async def store_customer_bill(customer: Customer):
         admin.commit()
     admin_cursor.execute(f"INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{customer.phone}'),'{customer.customer_id}',CURRENT_DATE,'{customer.total_spent}')")
     admin.commit()
+    return Response(status_code=200)
 
-@app.post('/store-bill-item')
-async def store_bill_item(order:Order_items):
-    return
+# @app.post('/store-bill-item')
+# async def store_bill_item(order:Order_items):
+#     return
 
 def sanitize_phone_number(phone: str) -> str:
     if phone.startswith('+'):

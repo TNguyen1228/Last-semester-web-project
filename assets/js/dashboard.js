@@ -39,7 +39,6 @@ window.onclick = function (event) {
 document.querySelector('.logout-btn').addEventListener('click', function () {
     fetch('/logout', {
         method: 'GET'
-        
     })
         .then(response => {
             
