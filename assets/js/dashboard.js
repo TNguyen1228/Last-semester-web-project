@@ -7,22 +7,16 @@ function toggleNav() {
             
             sidebar.style.width = "250px";
             mainContent.style.marginLeft = "250px";
-            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+
             navOpen = true;
         } else {
             
             sidebar.style.width = "0";
             mainContent.style.marginLeft = "0";
-            document.body.style.backgroundColor = "white";
             navOpen = false;
         }
     }
 }
-
-function dropDownList() {
-    document.getElementById("dropdownTable").classList.toggle("show");
-}
-
 
 window.onclick = function (event) {
     if (!event.target.matches('.dropbtn')) {

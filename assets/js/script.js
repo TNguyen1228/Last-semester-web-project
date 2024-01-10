@@ -172,8 +172,6 @@ function userSubscribe() {
   // Retrieve input value
   const phoneInput = document.getElementById('subscriber-phone').value;
 
-  // Send data (you can replace this with your actual data sending process, like using fetch or AJAX)
-  // For demonstration purposes, logging the retrieved phone number
   console.log('Phone Number:', phoneInput);
 
   fetch('/subscribe', {
