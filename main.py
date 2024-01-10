@@ -61,8 +61,12 @@ async def menu(request: Request):
 
     cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
     snack_list=cursor.fetchall()
+
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'other%' ")
+    other_list=admin_cursor.fetchall()
+
     return templates.TemplateResponse("menu.html",{"request": request, "records":coffee_list, 
-                                                   "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
+                                                   "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list,"other_list":other_list})
     
 @app.post('/submit_booking', response_class=HTMLResponse)
 async def submit_form(name: str = Form(),
@@ -185,19 +189,22 @@ async def purchase(request: Request):
     if not user:
         return RedirectResponse(url='/login')
 
-    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'CF%' ")
-    coffee_list=cursor.fetchall()
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'CF%' ")
+    coffee_list=admin_cursor.fetchall()
 
-    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'TEA%' ")
-    tea_list=cursor.fetchall()
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'TEA%' ")
+    tea_list=admin_cursor.fetchall()
 
-    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'Smoothie%' ")
-    smoothie_list=cursor.fetchall()
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'Smoothie%' ")
+    smoothie_list=admin_cursor.fetchall()
 
-    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
-    snack_list=cursor.fetchall()
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
+    snack_list=admin_cursor.fetchall()
+
+    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'other%' ")
+    other_list=admin_cursor.fetchall()
     return templates.TemplateResponse("purchase.html",{"request": request, "coffee_list":coffee_list, 
-                                                   "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list})
+                                                   "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list,"other_list":other_list})
 
 @app.get('/booking_table', response_class=HTMLResponse)
 async def booking(request: Request):
@@ -425,3 +432,4 @@ async def clean_room(r: CleanRoomRequest):
     
     admin.commit()
     return Response(status_code=200)
+
