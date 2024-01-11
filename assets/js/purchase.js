@@ -118,19 +118,19 @@ function storeData() {
   const elements = document.querySelectorAll('p.product a');
 
   // Create an object to store unique text content as keys and their counts as values
-  const textCounts = {};
+  const productCount = {};
 
   // Loop through each <a> element within <p class="product">
   elements.forEach((element) => {
     const text = element.textContent.trim();
 
     // Check if the text content exists as a key in textCounts
-    if (textCounts[text]) {
+    if (productCount[text]) {
       // If it exists, increment the count
-      textCounts[text]++;
+      productCount[text]++;
     } else {
       // If it doesn't exist, initialize the count to 1
-      textCounts[text] = 1;
+      productCount[text] = 1;
     }
   });
 
@@ -140,7 +140,7 @@ function storeData() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ customer_id: cus_id, phone: phoneNumber, total_spent: bill }),
+      body: JSON.stringify({ customer_id: cus_id, phone: phoneNumber, total_spent: bill, productCount:productCount }),
       
     })
       .then(response => {

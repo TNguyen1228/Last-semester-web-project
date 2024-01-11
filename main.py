@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
+from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, status
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
@@ -114,6 +114,8 @@ async def getNhanVien(request: Request):
     user = request.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
+    # if user != "admin":
+    #     raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED, detail="User not allowed")
     admin_cursor.execute("SELECT `employee_id`, `name`, `position`, `contact_info`, `salary`, DATE_FORMAT(`hire_date`, '%d/%m/%Y') AS formatted_date FROM `employees` ")
     result = admin_cursor.fetchall()
     return templates.TemplateResponse("employees.html", {"request": request, "ls":result})
@@ -139,11 +141,6 @@ async def addEmployee(
     new_salary: float = Form(...),
     new_hire_date: str = Form(...),
 ):
-    # user = request.session.get("user")
-    # if not user:
-    #     return RedirectResponse(url='/login')
-    # cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (new_id,))
-    # existing_employee = cursor.fetchone()
     admin_cursor.execute(
         """
         INSERT INTO employees (employee_id, name, position, contact_info, salary, hire_date)
@@ -274,12 +271,10 @@ class Customer(BaseModel):
     phone: Optional[str]=None
     total_spent: Optional[float]=None
 class Order_items(Customer):
-    order_id: Optional[str]
-    order_item: Optional[str]
-    quantity: Optional[int]  
+    productCount:Optional[dict]
       
 @app.post("/store-customer-bill")
-async def store_customer_bill(customer: Customer):
+async def store_customer_bill(customer: Order_items):
     admin_cursor.execute(f"SELECT phone FROM customers WHERE `phone`= '{customer.phone}'")
     result=admin_cursor.fetchone()
     if result:
@@ -290,11 +285,10 @@ async def store_customer_bill(customer: Customer):
         admin.commit()
     admin_cursor.execute(f"INSERT INTO `orders`(`order_id`, `customer_id`, `order_date`, `total_amount`) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{customer.phone}'),'{customer.customer_id}',CURRENT_DATE,'{customer.total_spent}')")
     admin.commit()
+    for order_item, quantity in customer.productCount.items():
+        admin_cursor.execute(f"INSERT INTO order_items (order_id, order_item, quantity) VALUES (CONCAT(DATE_FORMAT(NOW(),'%y%m%d%H%i%s'),'{customer.phone}'), '{order_item}', {quantity})")
+        admin.commit()
     return Response(status_code=200)
-
-# @app.post('/store-bill-item')
-# async def store_bill_item(order:Order_items):
-#     return
 
 def sanitize_phone_number(phone: str) -> str:
     if phone.startswith('+'):
@@ -357,11 +351,11 @@ async def get_room_price(request:Request):
     room_list=admin_cursor.fetchall()
     return templates.TemplateResponse("room-price.html",{"request": request, "items":room_list}) 
 @app.get('/update-price',response_class=HTMLResponse)
-async def update_price(r:Request, items_id: str = Query()):
+async def update_price(r:Request, room_id: str = Query()):
     user = r.session.get("user")
     if not user:
         return RedirectResponse(url='/login')
-    return templates.TemplateResponse("updateRoomPrice.html",{"request":r,"item_info":items_id})
+    return templates.TemplateResponse("updateRoomPrice.html",{"request":r,"item_info":room_id})
 
 @app.post('/updating-room-price')
 async def update_price(room_number:str=Form(),new_price:str=Form()):
