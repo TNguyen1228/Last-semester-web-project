@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2024 at 06:48 PM
+-- Generation Time: Jan 11, 2024 at 08:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,15 +38,17 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`customer_id`, `phone`, `total_spent`) VALUES
-('ID_02672133096', '02672133096', 43.22),
-('ID_0349292753', '0349292753', 44.85),
+('ID_02672133096', '02672133096', 55.67),
+('ID_0349292753', '0349292753', 109.41),
+('ID_0398292753', '0398292753', 7.50),
 ('ID_0934833472', '0934833472', 15.00),
 ('ID_0943635243', '0943635243', 0.00),
 ('ID_0976442532', '0976442532', 0.00),
 ('ID_0987458552', '0987458552', 380.00),
 ('ID_0987663232', '0987663232', 0.00),
 ('ID_0987799636', '0987799636', 17.20),
-('ID_0987799637', '0987799637', 27.60);
+('ID_0987799637', '0987799637', 27.60),
+('ID_0999999999', '0999999999', 36.82);
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,13 @@ CREATE TABLE `customers_booking` (
 
 INSERT INTO `customers_booking` (`id`, `name`, `phone`, `person`, `reservation_date`, `time`, `message`) VALUES
 (11, 'Nguyễn Mạnh Tuấn', '+84349292753', 'Less than 5 person', '2024-01-08', '09:00 PM', NULL),
-(13, 'Lam Le', '20231217', 'Less than 5 person', '2024-01-08', '08:00 AM', NULL);
+(13, 'Lam Le', '20231217', 'Less than 5 person', '2024-01-08', '08:00 AM', NULL),
+(21, 'Phuong', '0987937244', '3-4 person', '0000-00-00', '09:00 AM', NULL),
+(22, 'Phuong', '0987937244', '3-4 person', '2024-02-01', '09:00 AM', NULL),
+(23, 'Phuong', '0987937244', '3-4 person', '2024-02-01', '09:00 AM', NULL),
+(24, 'Phuong', '0987937244', '3-4 person', '2024-02-01', '09:00 AM', NULL),
+(25, 'Phuong', '0987937244', '3-4 person', '2024-02-01', '09:00 AM', NULL),
+(26, 'Phuong', '0987937244', '3-4 person', '2024-02-01', '09:00 AM', NULL);
 
 -- --------------------------------------------------------
 
@@ -177,7 +185,16 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `total_amount`) V
 ('24010520391202672133096', 'ID_02672133096', '2024-01-05', 7.50),
 ('2401072017330987799637', 'ID_0987799637', '2024-01-07', 15.20),
 ('2401090011540987458552', 'ID_0987458552', '2024-01-09', 75.00),
-('2401102309230349292753', 'ID_0349292753', '2024-01-10', 4.75);
+('2401102309230349292753', 'ID_0349292753', '2024-01-10', 4.75),
+('2401112108190987799637_104', 'ID_0987799637', '2024-01-11', 0.00),
+('24011200402102672133096', 'ID_02672133096', '2024-01-12', 12.45),
+('2401120057210398292753', 'ID_0398292753', '2024-01-12', 7.50),
+('2401120058080999999999', 'ID_0999999999', '2024-01-12', 30.40),
+('2401120107400349292753', 'ID_0349292753', '2024-01-12', 11.95),
+('2401120113010349292753', 'ID_0349292753', '2024-01-12', 14.92),
+('2401120119440349292753', 'ID_0349292753', '2024-01-12', 16.07),
+('2401120121510999999999', 'ID_0999999999', '2024-01-12', 6.42),
+('2401120124290349292753', 'ID_0349292753', '2024-01-12', 21.62);
 
 -- --------------------------------------------------------
 
@@ -188,8 +205,26 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `total_amount`) V
 CREATE TABLE `order_items` (
   `order_id` varchar(30) NOT NULL,
   `order_item` varchar(255) NOT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_id`, `order_item`, `quantity`) VALUES
+('2401120121510999999999', 'Bottle beer', 1),
+('2401120121510999999999', 'Mixed Fruit', 1),
+('2401120121510999999999', 'Sunflower Seeds', 1),
+('2401120124290349292753', 'Blue Butterfly Pea Flower Tea', 1),
+('2401120124290349292753', 'Bottle beer', 1),
+('2401120124290349292753', 'Cream Chocolate Milk Tea', 1),
+('2401120124290349292753', 'Iced Apple Tea', 1),
+('2401120124290349292753', 'Matcha Tea', 1),
+('2401120124290349292753', 'Mixed Fruit', 1),
+('2401120124290349292753', 'Peach Iced Tea', 1),
+('2401120124290349292753', 'Ruby Red Tea', 1),
+('2401120124290349292753', 'Sunflower Seeds', 1);
 
 -- --------------------------------------------------------
 
@@ -316,7 +351,7 @@ ALTER TABLE `orders`
 -- Indexes for table `order_items`
 --
 ALTER TABLE `order_items`
-  ADD PRIMARY KEY (`order_item`),
+  ADD PRIMARY KEY (`order_id`,`order_item`),
   ADD KEY `order_id` (`order_id`);
 
 --
@@ -346,7 +381,7 @@ ALTER TABLE `room_menu`
 -- AUTO_INCREMENT for table `customers_booking`
 --
 ALTER TABLE `customers_booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
