@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, status
+from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, status, WebSocket
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
@@ -100,7 +100,10 @@ async def login(username: str=Form(), password: str=Form(), session: dict = Depe
         raise HTTPException(status_code=403)
 
 @app.get('/login')
-async def login_page():
+async def login_page(request:Request):
+    user = request.session.get("user")
+    if user:
+        return RedirectResponse(url='/employees')
     with open("./login-page.html", "r") as file:
         login_html = file.read()
     return HTMLResponse(content=login_html)
@@ -427,3 +430,19 @@ async def clean_room(r: CleanRoomRequest):
     admin.commit()
     return Response(status_code=200)
 
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        # Query the database for the latest chart data
+        query = "SELECT `order_item`, SUM(`quantity`) as count FROM `order_items` GROUP BY `order_item` ORDER BY count DESC LIMIT 10"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        latest_chart_data = [count for _, count in result]
+
+        # Send the latest chart data to the client
+        await websocket.send_json({"chartData": latest_chart_data})
+
+@app.get("/dashboard", response_class=HTMLResponse)
+async def get_chart_page():
+    return HTMLResponse(content=open("dashboard.html").read(), status_code=200)
