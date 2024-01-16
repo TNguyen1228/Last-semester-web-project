@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Optional, Union, Any
 from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, WebSocket
 from fastapi.staticfiles import StaticFiles
@@ -32,7 +33,8 @@ def generate_token(username: Union[str, Any]) -> str:
 
 app=FastAPI()
 
-templates=Jinja2Templates(directory='./')
+BASE_PATH = Path(__file__).resolve().parent
+templates=Jinja2Templates(directory=str(BASE_PATH / "templates"))
 
 app.mount("/assets", StaticFiles(directory="assets"))
 # Configure session middleware
@@ -124,7 +126,7 @@ async def login_page(request:Request):
     user = request.session.get("user")
     if user:
         return RedirectResponse(url='/employees')
-    with open("./login-page.html", "r") as file:
+    with open("templates/login-page.html", "r") as file:
         login_html = file.read()
     return HTMLResponse(content=login_html)
 @app.get('/logout')
