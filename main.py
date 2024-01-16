@@ -1,13 +1,15 @@
-from typing import Optional
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, status, WebSocket
+from typing import Optional, Union, Any
+from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, WebSocket
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
+from datetime import datetime, timedelta
 import secrets
 import string
+import jwt
 
 def generate_secret_key(length=20):
     alphabet = string.ascii_letters + string.digits + string.punctuation
@@ -15,6 +17,18 @@ def generate_secret_key(length=20):
     return secret_key
 # Secret key for session encryption
 SECRET_KEY = generate_secret_key()
+
+SECURITY_ALGORITHM = 'HS256'
+
+def generate_token(username: Union[str, Any]) -> str:
+    expire = datetime.utcnow() + timedelta(
+        seconds=60 * 60 * 24  # Expired after 1 days
+    )
+    to_encode = {
+        "exp": expire, "username": username
+    }
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=SECURITY_ALGORITHM)
+    return encoded_jwt
 
 app=FastAPI()
 
@@ -30,7 +44,8 @@ customer = mysql.connector.connect(
     host="",
     user="custom",
     password="customer",
-    database="coffee_management"
+    database="coffee_management",
+    
 )
 cursor=customer.cursor()
 
@@ -62,8 +77,8 @@ async def menu(request: Request):
     cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'SNACK%' ")
     snack_list=cursor.fetchall()
 
-    admin_cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'other%' ")
-    other_list=admin_cursor.fetchall()
+    cursor.execute(f"SELECT * FROM menu WHERE item_id LIKE 'other%' ")
+    other_list=cursor.fetchall()
 
     return templates.TemplateResponse("menu.html",{"request": request, "records":coffee_list, 
                                                    "tea_list":tea_list,"snack_list":snack_list, "smoothie_list":smoothie_list,"other_list":other_list})
@@ -91,10 +106,15 @@ users = {
 # Dependency to access the session
 def get_session(request: Request):
     return request.session
-@app.post('/login-check')
-async def login(username: str=Form(), password: str=Form(), session: dict = Depends(get_session)):
-    if username in users and users[username]["password"] == password:
-        session["user"] = username  # Store username in session upon successful login
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@app.post('/login')
+async def login(request:LoginRequest, session: dict = Depends(get_session)):
+    if request.username in users and users[request.username]["password"] == request.password:
+        session["user"] = request.username  # Store username in session upon successful login
         return Response(status_code=200)
     else:
         raise HTTPException(status_code=403)
