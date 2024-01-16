@@ -1,86 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block title %}Menu Item information{% endblock %}
+{% block content %}
+<main class="table" >
+    <section class="table__header">
+        <h1>Menu Item</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Search Data...">
+            <img src="assets/images/icon-search.png" alt="">
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Name <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Description <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Price</th>
+                    {% if user == "admin" %}
+                    <th></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in menu_items %}
+                <tr>
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td>{{item[3]}}</td>
+                    {% if user == "admin" %}
+                    <td>
+                        <form action="/update-menu" method="get">
+                            <input type="hidden" name="items_id" value="{{item[0]}}">
+                            <button id="updateButton" type="submit">Update</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/stat.css">
-    <link rel="stylesheet" href="assets/css/dashboard.css">
-    <title>Menu Item information</title>
-</head>
+</main>
+{% endblock %}
 
-<body>
-    <div id="mySidebar" class="sidebar">
-
-        <a href="/booking_table">Booking</a>
-        <a href="/employees">Employees</a>
-        <a href="/menu_item">Menu Items</a>
-        <a href="/room-item">Room items</a>
-        <a href="/room-price">Room Price</a>
-        <a href="/room-management">Room Management</a>
-
-        <a href="/new-employee">New Staff</a>
-        <a href="/purchase">Purchase</a>
-        
-
-    </div>
-    <button class="openbtn" onclick="toggleNav()"
-        style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
-    <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
-    <main class="table" id="customers_table">
-        <section class="table__header">
-            <h1>Menu Item</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Search Data...">
-                <img src="assets/images/icon-search.png" alt="">
-            </div>
-        </section>
-        <section class="table__body">
-            <table>
-                <thead>
-                    <tr>
-                        <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Name <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Description <span class="icon-arrow">&UpArrow;</span></th>
-                        <th> Price</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for item in menu_items %}
-                    <tr>
-                        <td>{{item[0]}}</td>
-                        <td>{{item[1]}}</td>
-                        <td>{{item[2]}}</td>
-                        <td>{{item[3]}}</td>
-
-                        <td>
-                            <form action="/update-menu" method="get">
-                                <input type="hidden" name="items_id" value="{{item[0]}}">
-                                <button id="updateButton" type="submit">Update</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </section>
-
-    </main>
-    <script>
-        function myFunction(form) {
-            if (confirm("Are you sure you want to delete?")) {
-                // User clicked OK, submit the form
-                form.submit();
-                window.alert("Complete");
-            } else {
-                // User clicked Cancel, do nothing
-            }
+{% block script %}
+<script>
+    function myFunction(form) {
+        if (confirm("Are you sure you want to delete?")) {
+            // User clicked OK, submit the form
+            form.submit();
+            window.alert("Complete");
+        } else {
+            // User clicked Cancel, do nothing
         }
-    </script>
-    <script src="assets/js/stat.js"></script>
-    <script src="assets/js/dashboard.js"></script>
-</body>
-
-</html>
+    }
+</script>
+{% endblock %}

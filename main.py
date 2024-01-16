@@ -143,7 +143,7 @@ async def getNhanVien(request: Request):
     #     raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED, detail="User not allowed")
     admin_cursor.execute("SELECT `employee_id`, `name`, `position`, `contact_info`, `salary`, DATE_FORMAT(`hire_date`, '%d/%m/%Y') AS formatted_date FROM `employees` ")
     result = admin_cursor.fetchall()
-    return templates.TemplateResponse("employees.html", {"request": request, "ls":result})
+    return templates.TemplateResponse("employees.html", {"request": request, "ls":result, "user":user})
 
 @app.post("/delete-employee")
 async def deleteEmployee(employee_id: str = Form(...)):
@@ -251,7 +251,7 @@ async def room_item(request:Request):
         return RedirectResponse(url='/login')
     admin_cursor.execute(f"SELECT `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items`")
     item_list=admin_cursor.fetchall()
-    return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list})
+    return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list, "user":user})
     
 @app.get("/update-room-item", response_class=HTMLResponse)
 async def updateRoomItem(request: Request, room_number: int = Query(...), item_name: str=Query(...)):
@@ -289,7 +289,7 @@ async def room_item(request:Request):
         return RedirectResponse(url='/login')
     admin_cursor.execute(f"SELECT * FROM `customers`")
     customer_list=admin_cursor.fetchall()
-    return templates.TemplateResponse("customer.html",{"request": request, "customer_list":customer_list})
+    return templates.TemplateResponse("customer.html",{"request": request, "customer_list":customer_list, "user":user})
 
 class Customer(BaseModel):
     customer_id: Optional[str]=None
@@ -338,7 +338,7 @@ async def get_menu_items(request:Request):
         return RedirectResponse(url='/login')
     admin_cursor.execute(f"SELECT * FROM menu")
     list_items=admin_cursor.fetchall()
-    return templates.TemplateResponse("menuItem.html",{"request": request, "menu_items":list_items}) 
+    return templates.TemplateResponse("menuItem.html",{"request": request, "menu_items":list_items, "user":user}) 
 
 @app.get('/update-menu', response_class=HTMLResponse)
 async def update_menu(request:Request, items_id: str = Query(...)):
