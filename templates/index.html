@@ -399,7 +399,10 @@
             <h2 class="headline-1 section-title">Every Fla vor Tells a Story</h2>
 
             <p class="section-text">
-              Created in 2000 to provide endless karaoke entertainment for everyone. A guaranteed fun way to spend an evening filled with singing, drinking, and dancing with friends, family, colleagues, and more! You have the option to hangout in the lounge area by the bar, or reserve a private room and have an unforgettable private karaoke experience. Groups of all sizes are welcome.
+              Created in 2000 to provide endless karaoke entertainment for everyone. A guaranteed fun way to spend an
+              evening filled with singing, drinking, and dancing with friends, family, colleagues, and more! You have
+              the option to hangout in the lounge area by the bar, or reserve a private room and have an unforgettable
+              private karaoke experience. Groups of all sizes are welcome.
             </p>
 
             <div class="contact-label">Book Through Call</div>
@@ -854,6 +857,17 @@
     - custom js link
   -->
   <script src="./assets/js/script.js"></script>
+  <script>
+    document.getElementById("bookingForm").addEventListener("submit", function (event) {
+      var phoneNumberInput = document.getElementsByName("phone")[0];
+      var phoneNumber = phoneNumberInput.value;
+
+      if (phoneNumber.length > 11) {
+        alert("Please enter a valid phone number with 11 digits or less.");
+        event.preventDefault(); // Prevent form submission
+      }
+    });
+  </script>
 
   <!-- 
     - ionicon link

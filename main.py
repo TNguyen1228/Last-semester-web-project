@@ -1,16 +1,14 @@
 from pathlib import Path
-from typing import Optional, Union, Any
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response, WebSocket
+from typing import Optional
+from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, RedirectResponse
 import mysql.connector
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
-from datetime import datetime, timedelta
 import secrets
 import string
-import jwt
 
 def generate_secret_key(length=20):
     alphabet = string.ascii_letters + string.digits + string.punctuation
@@ -18,18 +16,6 @@ def generate_secret_key(length=20):
     return secret_key
 # Secret key for session encryption
 SECRET_KEY = generate_secret_key()
-
-SECURITY_ALGORITHM = 'HS256'
-
-def generate_token(username: Union[str, Any]) -> str:
-    expire = datetime.utcnow() + timedelta(
-        seconds=60 * 60 * 24  # Expired after 1 days
-    )
-    to_encode = {
-        "exp": expire, "username": username
-    }
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=SECURITY_ALGORITHM)
-    return encoded_jwt
 
 app=FastAPI()
 
@@ -154,8 +140,8 @@ async def deleteEmployee(employee_id: str = Form(...)):
 @app.get("/new-employee", response_class=HTMLResponse)
 async def getNewEmployee(request: Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     return templates.TemplateResponse("new_employee.html", {"request": request})
 @app.post("/add-employee", response_class=HTMLResponse)
 async def addEmployee(
@@ -180,8 +166,8 @@ async def addEmployee(
 @app.get("/update-employee", response_class=HTMLResponse)
 async def getUpdateEmployee(request: Request, employee_id: str = Query(...)):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute("SELECT * FROM employees WHERE employee_id = %s", (employee_id,))
     employee_info = admin_cursor.fetchone()
     return templates.TemplateResponse("update.html", {"request": request, "employee_info": employee_info})
@@ -231,8 +217,8 @@ async def purchase(request: Request):
 @app.get('/booking_table', response_class=HTMLResponse)
 async def booking(request: Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     
     admin_cursor.execute(f"SELECT id, name, phone, person, DATE_FORMAT(reservation_date, '%d/%m/%Y') AS formatted_date, time, message FROM `customers_booking`")
     booking_list=admin_cursor.fetchall()
@@ -247,8 +233,8 @@ async def deleteEmployee(id: int = Form()):
 @app.get('/room-item', response_class=HTMLResponse)
 async def room_item(request:Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute(f"SELECT `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items`")
     item_list=admin_cursor.fetchall()
     return templates.TemplateResponse("roomItem.html",{"request": request, "item_list":item_list, "user":user})
@@ -256,8 +242,8 @@ async def room_item(request:Request):
 @app.get("/update-room-item", response_class=HTMLResponse)
 async def updateRoomItem(request: Request, room_number: int = Query(...), item_name: str=Query(...)):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute("SELECT `room_number`, `item_name`, `quantity`, `item_condition`, DATE_FORMAT(`last_checked`,'%d/%m/%Y') FROM `room_items` WHERE `room_number` = %s AND `item_name`=%s", (room_number,item_name))
     items_id_result = admin_cursor.fetchone()
     return templates.TemplateResponse("updateRoomItem.html", {"request": request, "item_info": items_id_result})
@@ -285,8 +271,8 @@ async def updateRoomItem(
 @app.get('/customer-info', response_class=HTMLResponse)
 async def room_item(request:Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute(f"SELECT * FROM `customers`")
     customer_list=admin_cursor.fetchall()
     return templates.TemplateResponse("customer.html",{"request": request, "customer_list":customer_list, "user":user})
@@ -334,8 +320,8 @@ async def subscribe(cus:Customer):
 @app.get('/menu_item', response_class=HTMLResponse)
 async def get_menu_items(request:Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute(f"SELECT * FROM menu")
     list_items=admin_cursor.fetchall()
     return templates.TemplateResponse("menuItem.html",{"request": request, "menu_items":list_items, "user":user}) 
@@ -343,8 +329,8 @@ async def get_menu_items(request:Request):
 @app.get('/update-menu', response_class=HTMLResponse)
 async def update_menu(request:Request, items_id: str = Query(...)):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute(f"SELECT * FROM menu where `item_id`='{items_id}'")
     result=admin_cursor.fetchone()
     return templates.TemplateResponse("updateMenu.html",{"request": request, "item":result}) 
@@ -370,16 +356,16 @@ async def update_menu(
 @app.get('/room-price',response_class=HTMLResponse)
 async def get_room_price(request:Request):
     user = request.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": request})
     admin_cursor.execute(f"SELECT * FROM `room_menu` ")
     room_list=admin_cursor.fetchall()
     return templates.TemplateResponse("room-price.html",{"request": request, "items":room_list}) 
 @app.get('/update-price',response_class=HTMLResponse)
 async def update_price(r:Request, room_id: str = Query()):
     user = r.session.get("user")
-    if not user:
-        return RedirectResponse(url='/login')
+    if user != "admin":
+        return templates.TemplateResponse("non_admin_message.html", {"request": r})
     return templates.TemplateResponse("updateRoomPrice.html",{"request":r,"item_info":room_id})
 
 @app.post('/updating-room-price')
@@ -451,20 +437,3 @@ async def clean_room(r: CleanRoomRequest):
     
     admin.commit()
     return Response(status_code=200)
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    while True:
-        # Query the database for the latest chart data
-        query = "SELECT `order_item`, SUM(`quantity`) as count FROM `order_items` GROUP BY `order_item` ORDER BY count DESC LIMIT 10"
-        cursor.execute(query)
-        result = cursor.fetchall()
-        latest_chart_data = [count for _, count in result]
-
-        # Send the latest chart data to the client
-        await websocket.send_json({"chartData": latest_chart_data})
-
-@app.get("/dashboard", response_class=HTMLResponse)
-async def get_chart_page():
-    return HTMLResponse(content=open("dashboard.html").read(), status_code=200)
