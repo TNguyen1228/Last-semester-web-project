@@ -327,12 +327,16 @@
             e.preventDefault();
 
             const formData = new FormData(form);
+            const phoneNumber = formData.get('new_contact_info');
             try {
                 const response = await fetch('/add-employee', {
                     method: 'POST',
                     body: formData
                 });
-
+                if (phoneNumber.length !== 10) {
+                    alert("Phone number must not exceed 10 digits");
+                    return;
+                }
                 if (response.status === 500) {
                     // Handle the error here, for example, display it in an alert
                     alert("ID already exited");

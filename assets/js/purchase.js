@@ -75,17 +75,12 @@ function validateAndDisplay() {
   const phonePattern = /^\d{10,11}$/;
 
   if (inputValue !== '' && phonePattern.test(inputValue)) {
-
     displayPhoneNumber();
-
     document.getElementById('clear-button').style.display = 'inline-block';
   } else {
-
     alert('Please enter a valid 10 or 11-digit phone number.');
   }
 }
-
-
 document.getElementById("phone-input").addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
 
@@ -94,23 +89,15 @@ document.getElementById("phone-input").addEventListener("keyup", function (event
     validateAndDisplay();
   }
 });
-
-
 function displayPhoneNumber() {
-
   const phoneNumber = document.getElementById('phone-input').value.trim();
-
   const phoneDisplay = document.getElementById('phone-display');
   const newElement = document.createElement('p');
   newElement.textContent = `Customer phone number: ${phoneNumber}`;
-
   phoneDisplay.innerHTML = '';
-
   phoneDisplay.appendChild(newElement);
 
 }
-
-
 function storeData() {
   const phoneNumber = document.getElementById('phone-input').value.trim();
   const cus_id = `ID_${phoneNumber}`

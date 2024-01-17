@@ -73,11 +73,11 @@ function validateForm(event) {
     var idValue = document.getElementById('new_id').value;
     var idPattern = /^ID_\d{1,6}$/;
     if (!idPattern.test(idValue)) {
-        showErrorPopup("The ID is not ID_(number) form");
+        showErrorPopup("The ID is not in the ID_(number) form");
         event.preventDefault();
+        return;
     }
 }
-
 function showErrorPopup(message) {
     var errorPopup = document.getElementById('error-popup');
     var errorMessage = document.getElementById('error-message');

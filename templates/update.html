@@ -43,14 +43,27 @@
 <script>
   function checkPosition() {
     var positionValue = document.getElementById('new_position').value.toLowerCase();
+    var contactInfoValue = document.getElementById('new_contact_info').value;
 
+   
     if (positionValue.includes("manager") || positionValue.includes("quản lý")) {
-      alert("You are manager already!");
-      return false;
+        alert("You are a manager already!");
+        return false;
     }
 
-    return true;
-  }
+   
+    if (contactInfoValue.length !== 10) {
+        alert("Contact Info must have exactly 10 characters.");
+        return false;
+    }
+
+    return true; 
+}
+  document.getElementById('updating').addEventListener('submit', function (event) {
+    if (!checkPosition()) {
+        event.preventDefault(); 
+    }
+  });
 </script>
 
 </html>
