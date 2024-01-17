@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Staff</title>
+  <link rel="icon" href="./assets/favicon.png">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <link rel="stylesheet" href="assets/css/update-form.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form id="updating" method="post" action="/updating">
+      <h1>Update Staff Info</h1>
+      <div class="input-box">
+        <input type="text" id="employee_id" name="employee_id" value="{{employee_info[0]}}" readonly
+          style="text-align: center;">
+      </div>
+
+      <div class="input-box">
+        <label for="new_position">Position:</label>
+        <input type="text" id="new_position" name="new_position" placeholder="{{ employee_info[2] }}" required>
+      </div>
+      <div class="input-box">
+        <label for="new_contact_info">Contact Info:</label>
+        <input type="text" id="new_contact_info" name="new_contact_info" placeholder="{{ employee_info[3] }}" required>
+      </div>
+      <div class="input-box">
+        <label for="new_salary">Salary:</label>
+        <input type="number" id="new_salary" name="new_salary" placeholder="{{ employee_info[4] }}" required>
+      </div>
+
+      <button type="submit" onsubmit="return checkPosition();">Complete</button>
+    </form>
+  </div>
+</body>
+
+<script>
+  function checkPosition() {
+    var positionValue = document.getElementById('new_position').value.toLowerCase();
+    var contactInfoValue = document.getElementById('new_contact_info').value;
+
+   
+    if (positionValue.includes("manager") || positionValue.includes("quản lý")) {
+        alert("You are a manager already!");
+        return false;
+    }
+
+   
+    if (contactInfoValue.length !== 10) {
+        alert("Contact Info must have exactly 10 characters.");
+        return false;
+    }
+
+    return true; 
+}
+  document.getElementById('updating').addEventListener('submit', function (event) {
+    if (!checkPosition()) {
+        event.preventDefault(); 
+    }
+  });
+</script>
+
+</html>

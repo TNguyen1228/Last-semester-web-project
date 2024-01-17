@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Menu Item</title>
+  <link rel="icon" href="./assets/favicon.png">
+  <link rel="stylesheet" href="assets/css/update-form.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form id="updating" method="post" action="/updating-menu">
+      <h1>Update Menu</h1>
+      <div class="input-box">
+        <input type="text" id="item_id" name="item_id" value="{{item[0]}}" readonly
+          style="text-align: center;">
+      </div>
+
+      <div class="input-box">
+        <label for="new_name">Name:</label>
+        <input type="text" id="new_name" name="new_name" placeholder="{{ item[1] }}" value="{{item[1]}}">
+      </div>
+      <div class="input-box">
+        <label for="new_contact_info">Description</label>
+        <input type="text" id="new_description" name="new_description" value="{{item[2]}}" required>
+      </div>
+      <div class="input-box">
+        <label for="new_price">New Price:</label>
+        <input type="text" id="new_price" name="new_price" placeholder="{{item[3]}}" value="{{item[3]}}" required>
+      </div>
+      
+      <button type="submit">Complete</button>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Customer information{% endblock %}
+{% block content %}
+<main class="table" >
+    <section class="table__header">
+        <h1>Customer's Information</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Search Data...">
+            <img src="assets/images/icon-search.png" alt="">
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+
+                    <th> Phone </th>
+
+                    <th> Total Spend </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in customer_list %}
+                <tr>
+                    <td>{{row[0] }}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2] if row[2] is not none else '0.00'}}</td>
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    function myFunction(form) {
+        if (confirm("Are you sure you want delete this?")) {
+
+            form.submit();
+        } else {
+
+        }
+    }
+</script>
+{% endblock %}

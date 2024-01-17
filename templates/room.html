@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
+    <link rel="icon" href="/assets/favicon.png">
+    <title>Room Management</title>
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: -ms-flexbox;
+            /* IE10 */
+            display: flex;
+            -ms-flex-wrap: wrap;
+            /* IE10 */
+            flex-wrap: wrap;
+            margin: 0 -16px;
+        }
+
+        .col-25 {
+            -ms-flex: 25%;
+            /* IE10 */
+            flex: 25%;
+        }
+
+        .col-50 {
+            -ms-flex: 50%;
+            /* IE10 */
+            flex: 50%;
+        }
+
+        .col-75 {
+            -ms-flex: 75%;
+            /* IE10 */
+            flex: 75%;
+        }
+
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
+
+        .container {
+            background-color: #f2f2f2;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
+            border-radius: 3px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
+
+        .button {
+            width: 50px;
+            height: 50px;
+            background-color: #d2d2d2;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .cbutton {
+            border-radius: 50%;
+        }
+
+        .button-container button:hover,
+        .cbutton:hover {
+            background-color: #787878;
+        }
+
+        a {
+            color: #2196F3;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        hr {
+            border: 1px solid lightgrey;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+
+        table {
+            border-spacing: 50px;
+            height: 50%;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            border-radius: 10px;
+            text-align: center;
+            height: 50px;
+
+        }
+
+        tr {
+            height: 100px;
+        }
+
+        .room.selected {
+            background-color: #787878;
+        }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+        @media (max-width: 800px) {
+            .row {
+                flex-direction: column-reverse;
+            }
+
+            .col-25 {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <main>
+        <div id="mySidebar" class="sidebar">
+            <!-- <a href="/dashboard">Dashboard</a> -->
+
+            <a href="/booking_table">Booking</a>
+            <a href="/employees">Employees</a>
+            <a href="/menu_item">Menu Items</a>
+            <a href="/room-item">Room items</a>
+            <a href="/room-price">Room Price</a>
+            <a href="/room-management">Room Management</a>
+
+            <a href="/new-employee">New Staff</a>
+            <a href="/purchase">Purchase</a>
+            
+
+        </div>
+        <button class="openbtn" onclick="toggleNav()"
+            style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
+        <h2 style="text-align: center;">ROOM MANAGEMENT</h2>
+
+        <div class="row">
+            <div class="col-50">
+                <div class="container">
+                    <section>
+                        <!--Tea  -->
+                        <div class="container">
+
+                            <table style="width: 100%;">
+                                <h2 id="1f" style="text-align: center;">1st Floor</h2>
+                                <tr>
+                                    <td class="room">101</td>
+                                    <td class="room">102</td>
+                                </tr>
+                                <tr>
+                                    <td class="room">103</td>
+                                    <td class="room">104</td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="container">
+
+                            <table style="width: 100%;">
+                                <h2 id="2f" style="text-align: center;">2st Floor</h2>
+
+                                <tr>
+                                    <td class="room"> 201</td>
+                                    <td class="room"> 202</td>
+                                    <td class="room"> 203</td>
+                                </tr>
+                                <tr>
+                                    <td class="room"> 204</td>
+                                    <td class="room"> 205</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="col-25">
+                <div class="container" id="cart-container">
+                    <h4>Service <span class="bill" style="color:black; cursor:pointer">
+                            <!-- <i class="fa fa-shopping-cart"></i> -->
+                            <!-- <b id="cart-total">0</b></span> -->
+                    </h4>
+
+                    <hr>
+                    <p>Total <span class="price" style="color:black"><b id="total-price"></b></span></p>
+                    <p></p>
+                    <div>
+                        <input type="text" id="phone-input" placeholder="Enter Customer phone number...">
+                    </div>
+                    <div id="phone-display"> </div>
+                    <div class="button-container"
+                        style="display: flex; justify-content: space-between; margin-top: 10px;">
+                        <button class="button" style="width: 100px; height: 40px; "
+                            onclick="cleanRoom()">Complete</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+<script src="assets/js/room-management.js"></script>
+<script src="assets/js/dashboard.js"></script>
+
+
+</html>

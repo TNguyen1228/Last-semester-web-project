@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Room Price</title>
+    <link rel="icon" href="./assets/favicon.png">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css/update-form.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <form id="updating" method="post" action="/updating-room-price">
+            <h1>Update Room Price</h1>
+            <div class="input-box">
+                <label for="room_number">Room:</label>
+                <input type="text" id="room_number" name="room_number" value="{{item_info}}" readonly
+                    style="text-align: center;">
+            </div>
+            <div class="input-box">
+                <label for="new_price">Price:</label>
+                <input type="text" id="new_price" name="new_price" value="">
+            </div>
+
+            <button type="submit" onclick="return checkValue(event);">Complete</button>
+        </form>
+    </div>
+    <script>
+        function checkValue(event) {
+            let price = document.getElementById('item_name').value.trim();
+
+            
+            let floatRegex = /^-?\d*(\.\d+)?$/;
+            let intRegex = /^-?\d+$/;
+
+            if (floatRegex.test(price) || intRegex.test(price)) {
+                return true; 
+            } else {
+                alert('Please enter a valid float or integer number for the price.');
+                
+                document.getElementById('item_name').value='';
+                return false; 
+            }
+        }
+    </script>
+</body>
+
+</html>

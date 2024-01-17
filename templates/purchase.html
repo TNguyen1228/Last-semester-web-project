@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./assets/css/purchase.css">
+  <link rel="icon" href="/assets/favicon.png">
+  <title>PURCHASE</title>
+  <style>
+
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <main>
+    <div id="mySidebar" class="sidebar">
+
+      <a href="/customer-info">Customer</a>
+      <a href="/booking_table">Booking</a>
+      <a href="/employees">Employees</a>
+      <a href="/menu_item">Menu Items</a>
+      <a href="/room-item">Room items</a>
+      <a href="/room-price">Room Price</a>
+      <a href="/room-management">Room Management</a>
+
+      <a href="/new-employee">New Staff</a>
+      <a href="/purchase">Purchase</a>
+      
+
+    </div>
+    <button class="openbtn" onclick="toggleNav()"
+      style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
+    <h2 style="text-align: center; font-size: 2em; font-weight: bold;  color: #ffd700;">
+      PURCHASE</h2>
+    <div class="row">
+      <div class="col-50">
+        <div class="container">
+          <section>
+            <div class="container">
+              <table style="width: 100%;">
+                <tr>
+                  <th style="width: 15px;"></th>
+                  <th style="width: 400px; padding-left: 120px; text-align: left; color: #f5f5f5;">Name</th>
+                  <th style="text-align: center; color: #ffc107;">Price</th>
+                  <th style="width: 30%; color: #8a2be2;">Quantity</th>
+                </tr>
+                {% for item in other_list %}
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                      alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                  <td style="padding: 20px; padding-left: 40px;"><a>{{item[1]}}</a></td>
+                  <td style="text-align: center;color: #ffc107;">${{item[3]}}</td>
+                  <td style="text-align: center; vertical-align: middle;">
+                    <button class="button cbutton decrease" id="decrease">-</button>
+                    <span class='count' style="margin: 0 5px;color: #ffffff;">0</span>
+                    <button class="button cbutton increase" id="increase">+</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+            <!--Tea  -->
+            <div class="container">
+              <table style="width: 100%;">
+                <h2 id="tea" style="text-align: center; color: #ff7301;">Tea</h2>
+                <tr>
+                  <th style="width: 15px;"></th>
+                  <th style="width: 400px; padding-left: 120px; text-align: left; color: #f5f5f5;">Name</th>
+                  <th style="text-align: center; color: #ffc107;">Price</th>
+                  <th style="width: 30%; color: #8a2be2;">Quantity</th>
+                </tr>
+                {% for item in tea_list %}
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                      alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                  <td style="padding: 20px; padding-left: 40px;"><a>{{item[1]}}</a></td>
+                  <td style="text-align: center;color: #ffc107;">${{item[3]}}</td>
+                  <td style="text-align: center; vertical-align: middle;">
+                    <button class="button cbutton decrease" id="decrease">-</button>
+                    <span class='count' style="margin: 0 5px;color: #ffffff;">0</span>
+                    <button class="button cbutton increase" id="increase">+</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+
+            <!-- Coffee -->
+            <div class="container">
+              <table style="width: 100%;">
+                <h2 id="coffee" style="text-align: center; color: #a76d0fb9;">Coffee
+                </h2>
+                <tr>
+                  <th style="width: 15px;"></th>
+                  <th style="width: 400px; padding-left: 120px; text-align: left; color: #ffffff;">Name</th>
+                  <th style="text-align: center; color: #ffc107;">Price</th>
+                  <th style="width: 30%; color: #8a2be2;">Quantity</th>
+                </tr>
+                {% for item in coffee_list %}
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                      alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                  <td style="padding: 20px; padding-left: 40px;"><a>{{item[1]}}</a></td>
+                  <td style="text-align: center;color: #ffc107;">${{item[3]}}</td>
+                  <td style="text-align: center; vertical-align: middle;">
+                    <button class="button cbutton decrease" id="decrease">-</button>
+                    <span class='count' style="margin: 0 5px;color: #ffffff;">0</span>
+                    <button class="button cbutton increase" id="increase">+</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+
+            <!-- Smoothies -->
+            <div class="container">
+              <table style="width: 100%;">
+                <h2 id="smoothie" style="text-align: center; color: #bd0263;">Smoothie
+                </h2>
+                <tr>
+                  <th style="width: 15px;"></th>
+                  <th style="width: 400px; padding-left: 120px; text-align: left; color: #ffffff;">Name</th>
+                  <th style="text-align: center; color: #ffc107;">Price</th>
+                  <th style="width: 30%; color: #8a2be2;">Quantity</th>
+                </tr>
+                {% for item in smoothie_list %}
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                      alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                  <td style="padding: 20px; padding-left: 40px;"><a>{{item[1]}}</a></td>
+                  <td style="text-align: center;color: #ffc107;">${{item[3]}}</td>
+                  <td style="text-align: center; vertical-align: middle;">
+                    <button class="button cbutton decrease" id="decrease">-</button>
+                    <span class='count' style="margin: 0 5px;color: #ffffff;">0</span>
+                    <button class="button cbutton increase" id="increase">+</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+
+            <!-- Snacks -->
+            <div class="container">
+              <table style="width: 100%;">
+                <h2 id="snacks" style="text-align: center; color: #078a74;">Snacks
+                </h2>
+                <tr>
+                  <th style="width: 15px;"></th>
+                  <th style="width: 400px; padding-left: 120px; text-align: left; color: #ffffff;">Name</th>
+                  <th style="text-align: center; color: #ffc107;">Price</th>
+                  <th style="width: 30%; color: #8a2be2;">Quantity</th>
+                </tr>
+                {% for item in snack_list %}
+                <tr>
+                  <td style="padding: 5px 5px 5px 5px"><img src='{{item[4]}}' width="60" height="60" loading="lazy"
+                      alt={{item[1]}} class="img-cover" style="border-radius: 5px;"></td>
+                  <td style="padding: 20px; padding-left: 40px;color: #ffffff;"><a>{{item[1]}}</a></td>
+                  <td style="text-align: center;color: #ffc107;">${{item[3]}}</td>
+                  <td style="text-align: center; vertical-align: middle;">
+                    <button class="button cbutton decrease" id="decrease">-</button>
+                    <span class='count' style="margin: 0 5px;color: #ffffff;">0</span>
+                    <button class="button cbutton increase" id="increase">+</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="col-25">
+        <div class="container" id="cart-container">
+          <h4 style="color:rgb(255, 255, 255);font-size: 35px">Cart <span class="price"
+              style="color:rgb(255, 255, 255);"><i class="fa fa-shopping-cart"></i> <b
+                id="cart-total">0</b></span>
+          </h4>
+
+          <hr>
+          <p style="color:rgb(255, 255, 255);font-size: 25px">Total <span class="price"
+              style="color:rgb(247, 247, 247)"><b id="total-price"></b></span></p>
+          <p></p>
+          <div>
+            <input type="text" id="phone-input" placeholder="Enter Customer phone number...">
+            <button class="button" style="width: 60px; height: 40px; display: none;" onclick="clearPhoneNumberInput()"
+              id="clear-button">Clear</button>
+          </div>
+          <div id="phone-display"> </div>
+          <div class="button-container" style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <!-- <button class="button" style="width: 60px; height: 40px;" onclick="validateAndDisplay()">Check</button> -->
+            <button class="button" style="width: 100px; height: 40px;" onclick="storeData()">Complete</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+</body>
+<script src="assets/js/purchase.js"></script>
+<script src="assets/js/dashboard.js"></script>
+
+
+</html>

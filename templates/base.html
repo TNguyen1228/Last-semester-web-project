@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/stat.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div id="mySidebar" class="sidebar">
+        {% for href, text in [('/customer-info', 'Customer'), ('/booking_table', 'Booking'),
+                        ('/employees', 'Employees'),('/menu_item', 'Menu Items'),('/room-item', 'Room items'),('/room-price', 'Room Price'),
+                        ('/room-management', 'Room Management'),('/new-employee', 'New Staff'),('/purchase', 'Purchase'),] %}
+            {% if href == '/new-employee' and user=="admin" %}
+                <a href="{{ href }}">{{ text }}</a>
+            {% elif href != '/new-employee' %}
+                <a href="{{ href }}">{{ text }}</a>
+            {% endif %}
+                        
+        {% endfor %}
+    </div>
+    <button class="openbtn" onclick="toggleNav()"
+        style="position: fixed!important; z-index: 5; top: 10px; left: 10px;">☰</button>
+    <button class="logout-btn" style="position: fixed!important; z-index: 5; top: 10px; right: 10px;">Logout</button>
+    {% block content %}{% endblock %}
+    {% block script %}{% endblock %}
+    <script src="assets/js/stat.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Booking information{% endblock %}
+{% block content %}
+<main class="table" >
+    <section class="table__header">
+        <h1>Booking's Information</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Search Data...">
+            <img src="assets/images/icon-search.png" alt="">
+        </div>
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th> Name </th>
+                    <th> Phone </th>
+                    <th> Number of people </th>
+                    <th> Arrival date </th>
+                    <th> Time </th>
+                    <th> Message </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in booking_list %}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    <td>{{row[6] if row[6] is not none else ''}}</td>
+                    <td>
+                        <form action="/delete-booking" method="post">
+                            <input type="hidden" name="id" value="{{row[0]}}">
+                            <button id="fireButton" type="button" onclick="myFunction(this.form)">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    function myFunction(form) {
+        if (confirm("Are you sure you want delete this?")) {
+            form.submit();
+        } else {
+
+        }
+    }
+</script>
+{% endblock %}

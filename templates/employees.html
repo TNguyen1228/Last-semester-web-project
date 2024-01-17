@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Staff information{% endblock %}
+{% block content %}
+<main class="table" >
+    <section class="table__header">
+        <h1>Staffs's information</h1>
+        <div class="input-group">
+            <input type="search" placeholder="Search Data...">
+            <img src="assets/images/icon-search.png" alt="">
+        </div>
+        {% if user == "admin" %}
+        <a href="/new-employee"><button id="newStaffButton" style="text-decoration: none;">New Staff</button></a>
+        {% endif %}
+    </section>
+    <section class="table__body">
+        <table>
+            <thead>
+                <tr>
+                    <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Staff <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Position <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Phone Number</th>
+                    <th> Salary <span class="icon-arrow">&UpArrow;</span></th>
+                    <th> Hire_Date </th>
+                    {% if user == "admin" %}
+                    <th> Action</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in ls %}
+                <tr>
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+                    <td>{{row[5]}}</td>
+                    {% if user == "admin" %}
+                    <td>
+                        <form action="/update-employee" method="get">
+                            <input type="hidden" name="employee_id" value="{{row[0] }}">
+                            <button id="updateButton" type="submit">Update</button>
+                        </form>
+                        <br>
+                        <form action="/delete-employee" method="post">
+                            <input type="hidden" name="employee_id" value="{{row[0]}}">
+                            <button id="fireButton" type="button" onclick="myFunction(this.form)" >Fire</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    function myFunction(form) {
+        if (confirm("Are you sure you want to fire this employee?")) {
+            
+            form.submit();
+            window.alert("Complete");
+        } else {
+            
+        }
+    }
+</script>
+{% endblock %}
